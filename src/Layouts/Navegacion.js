@@ -12,12 +12,12 @@ export default function Navegacion() {
             <Navbar.Collapse id="main-menu">
                 <Nav className="mr-auto">
                     <NavDropdown title="Productos" id="menu-dropdown">
-                        <NavDropdown.Item>Categorias</NavDropdown.Item>
-                        <NavDropdown.Item>Lista</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/categorias'}>Categorias</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/productos'}>Productos</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Personas" id="menu-dropdown">
-                        <NavDropdown.Item>Clientes</NavDropdown.Item>
-                        <NavDropdown.Item>Proveedores</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/clientes'}>Clientes</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/proveedores'}>Proveedores</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Tienda" id="menu-dropdown">
                         <NavDropdown.Item>Venta</NavDropdown.Item>
@@ -29,10 +29,14 @@ export default function Navegacion() {
                         <NavDropdown.Item>Reportes</NavDropdown.Item>
                         <NavDropdown.Item>Ajustes</NavDropdown.Item>
                     </NavDropdown>
-
+                    <NavDropdown title="Admin" id="menu-dropdown">
+                        <NavDropdown.Item>Auditoria</NavDropdown.Item>
+                        <NavDropdown.Item>Usuarios</NavDropdown.Item>
+                        <NavDropdown.Item>Facturas</NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
                 <Nav>
-                    <Nav.Link>Crear Cuenta</Nav.Link>
+                    <Nav.Link as={NavLink} to={'/signup'}>Crear Cuenta</Nav.Link>
                     <Nav.Link as={NavLink} to={'/signin'}>Iniciar sesion</Nav.Link>
                     <NavDropdown title="Cesar Mesa" id="menu-dropdown">
                         <NavDropdown.Item>Cerrar sesion</NavDropdown.Item>

@@ -1,5 +1,7 @@
 import React from "react";
 import DataTable from "react-data-table-component";
+import { Link } from "react-router-dom";
+import  "../../Css/Categoria.css";
 
 const columns = [
   {
@@ -34,14 +36,15 @@ const data = [
   {
     id: 1,
     categoria: "Lacteos",
-    descripcion: "Productos procedentes de lacteos",
-    acciones: "",
     estado: "ACTIVO",
+    descripcion:"Productos proveniente de la leche",
     acciones: (
       <div>
-        <button type="button" className="btn btn-light mr-2">
-          Visualizar
-        </button>
+        <Link to={`/categorias/1`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
+          </button>
+        </Link>
         <button type="button" className="btn btn-info">
           Editar
         </button>
@@ -52,14 +55,15 @@ const data = [
     id: 2,
     categoria: "Carnes",
     descripcion: "Todo lo relacionado a carniceria",
-    Acciones: "",
     estado: "ACTIVO",
     acciones: (
-      <div>
-        <button type="button" className="btn btn-light mr-2">
-          Visualizar
-        </button>
-        <button type="button" className="btn btn-info">
+      <div className="">
+        <Link to={`/categorias/2`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
+          </button>
+        </Link>
+        <button type="button" className="btn btn-info ">
           Editar
         </button>
       </div>
@@ -69,13 +73,14 @@ const data = [
     id: 3,
     categoria: "Bebidas",
     descripcion: "Referencia a gaseosas - jugos - cervezas - te",
-    Acciones: "",
     estado: "ACTIVO",
     acciones: (
       <div>
-        <button type="button" className="btn btn-light mr-2">
-          Visualizar
-        </button>
+        <Link to={`/categorias/3`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
+          </button>
+        </Link>
         <button type="button" className="btn btn-info">
           Editar
         </button>
@@ -90,9 +95,15 @@ export default function Categorias() {
       <h3 className="alert alert-info mt-4 mr-auto">
         {" "}
         Categorias{" "}
-        <button type="button" className="btn btn-outline-primary float-right">
+        
+        <button type="button" className="btn btn-outline-success float-right">
           Agregar categoria
         </button>
+        <Link to="/">
+          <button type="button" className="btn btn-outline-primary float-right mr-4 btn-volver">
+            Home
+          </button>
+        </Link>
       </h3>
       <DataTable
         columns={columns}

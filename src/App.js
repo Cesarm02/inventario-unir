@@ -8,6 +8,7 @@ import Home from "./pages/General/Home";
 import NotFound from "./pages/General/NotFound";
 import Categorias from "./pages/Productos/Categorias"
 import Productos from "./pages/Productos/Productos";
+import ListaProductos from "./pages/Productos/ListaProductos";
 import Clientes from "./pages/Personas/Clientes";
 import Proveedores from "./pages/Personas/Proveedores";
 import store from "./store";
@@ -21,13 +22,14 @@ function App() {
         <>
             <Navegacion></Navegacion>   
         </>
-        <Container>
+        <Container >
           <Routes> 
               <Route exact path="/" element = {<Home/>}></Route>
               <Route exact path="/signin" element={<Sigin/>} ></Route>
               <Route exact path="/signup" element={<SignUp/>} ></Route>
               <Route exact path="/categorias" element={<Categorias/>} ></Route>
               <Route exact path="/productos" element={<Productos/>} ></Route>
+              <Route exact path="/categorias/:id" element={<ListaProductos/>} ></Route>
               <Route exact path="/clientes" element={<Clientes/>} ></Route>
               <Route exact path="/proveedores" element={<Proveedores/>} ></Route>
               <Route path="*" element = {<NotFound/>}></Route>

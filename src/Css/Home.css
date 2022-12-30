@@ -1,0 +1,17 @@
+.box-body{
+    display: inline;
+}
+
+.chart{
+    display: flex;
+    justify-content: center;
+}
+
+.derecha{
+    
+    float: right;
+}
+
+.izquierda{
+    float: left;
+}

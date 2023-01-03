@@ -52,7 +52,7 @@ const data = [
     estado: "ACTIVO",
     acciones: (
       <div>
-        <Link to={`/productos/1`}>
+        <Link to={`/productos/editar/1`}>
           <button type="button" className="btn btn-info mr-2">
             Editar
           </button>
@@ -70,7 +70,7 @@ const data = [
     estado: "ACTIVO",
     acciones: (
       <div>
-        <Link to={`/productos/2`}>
+        <Link to={`/productos/editar/2`}>
           <button type="button" className="btn btn-info mr-2">
             Editar
           </button>
@@ -88,7 +88,7 @@ const data = [
     estado: "ACTIVO",
     acciones: (
       <div>
-        <Link to={`/productos/3`}>
+        <Link to={`/productos/editar/3`}>
           <button type="button" className="btn btn-info mr-2">
             Editar
           </button>
@@ -119,9 +119,11 @@ export default function Productos() {
       <h3 className="alert alert-info mt-4 mr-auto">
         {" "}
         Productos{" "}
-        <button type="button" className="btn btn-outline-success float-right">
-          Agregar productos
-        </button>
+        <Link to="/productos/agregar">
+          <button type="button" className="btn btn-outline-success float-right">
+            Agregar productos
+          </button>
+        </Link>
         <Link to="/">
           <button type="button" className="btn btn-outline-primary float-right mr-4 btn-volver">
             Home

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import AgregarCategoriaForm from '../../components/forms/Categoria/AgregarCategoriaForm'
 import { Container, Row, Card, Col } from 'react-bootstrap'
 import validator from 'validator'
 import { isObjectEmpty } from '../../Helpers/Helpers'

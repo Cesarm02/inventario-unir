@@ -6,17 +6,18 @@ import Sigin from "./pages/Login/Signin";
 import SignUp from "./pages/Login/SignUp";
 import Home from "./pages/General/Home";
 import NotFound from "./pages/General/NotFound";
-import Categorias from "./pages/Productos/Categorias"
+import Categorias from "./pages/Categorias/Categorias"
 import Productos from "./pages/Productos/Productos";
-import ListaProductos from "./pages/Productos/ListaProductos";
+import ListaProductos from "./pages/Categorias/ListaProductos";
 import Clientes from "./pages/Personas/Clientes";
 import Proveedores from "./pages/Personas/Proveedores";
 import store from "./store";
 import { Provider } from "react-redux";
 import Footer from "./pages/General/Footer";
 import EditProducto from "./pages/Productos/EditProducto";
-import AgregarCategoria from "./pages/Productos/AgregarCategoria";
-import EditarCategoria from "./pages/Productos/EditarCategoria";
+import AgregarCategoria from "./pages/Categorias/AgregarCategoria";
+import EditarCategoria from "./pages/Categorias/EditarCategoria";
+import AgregarProductos from "./pages/Productos/AgregarProductos";
 
 function App() {
   return (
@@ -35,7 +36,8 @@ function App() {
               <Route exact path="/categorias/:id" element={<ListaProductos/>} ></Route>
               <Route exact path="/categorias/editar/:id" element={<EditarCategoria/>} ></Route>
               <Route exact path="/productos" element={<Productos/>} ></Route>
-              <Route exact path="/productos/:id" element={<EditProducto/>} ></Route>
+              <Route exact path="/productos/agregar" element={<AgregarProductos/>} ></Route>
+              <Route exact path="/productos/editar/:id" element={<EditProducto/>} ></Route>
               <Route exact path="/clientes" element={<Clientes/>} ></Route>
               <Route exact path="/proveedores" element={<Proveedores/>} ></Route>
               <Route path="*" element = {<NotFound/>}></Route>

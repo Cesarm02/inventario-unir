@@ -25,6 +25,7 @@ export default function Home() {
       <div className="box-body col-md-16"> 
         <div className="col-md-12  derecha alertas">
           <div className="alert alert-secondary col-md-5 derecha" role="alert">
+          
             Ventas este mes $250.000
           </div>
           <div className="alert alert-success col-md-5 izquierda" role="alert">
@@ -54,9 +55,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
-      
     </Container>
-  
   )
 }

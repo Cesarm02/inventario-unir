@@ -14,6 +14,9 @@ import Proveedores from "./pages/Personas/Proveedores";
 import store from "./store";
 import { Provider } from "react-redux";
 import Footer from "./pages/General/Footer";
+import EditProducto from "./pages/Productos/EditProducto";
+import AgregarCategoria from "./pages/Productos/AgregarCategoria";
+import EditarCategoria from "./pages/Productos/EditarCategoria";
 
 function App() {
   return (
@@ -28,8 +31,11 @@ function App() {
               <Route exact path="/signin" element={<Sigin/>} ></Route>
               <Route exact path="/signup" element={<SignUp/>} ></Route>
               <Route exact path="/categorias" element={<Categorias/>} ></Route>
-              <Route exact path="/productos" element={<Productos/>} ></Route>
+              <Route exact path="/categorias/agregar" element={<AgregarCategoria/>} ></Route>
               <Route exact path="/categorias/:id" element={<ListaProductos/>} ></Route>
+              <Route exact path="/categorias/editar/:id" element={<EditarCategoria/>} ></Route>
+              <Route exact path="/productos" element={<Productos/>} ></Route>
+              <Route exact path="/productos/:id" element={<EditProducto/>} ></Route>
               <Route exact path="/clientes" element={<Clientes/>} ></Route>
               <Route exact path="/proveedores" element={<Proveedores/>} ></Route>
               <Route path="*" element = {<NotFound/>}></Route>

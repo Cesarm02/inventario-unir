@@ -47,17 +47,16 @@ const data = [
     nombre: "Leche lt",
     categoria: "Lacteos",
     precio : 3500,
-    cantidad : 6,
+    cantidad : 10,
     descripcion: "Productos procedentes de lacteos",
     estado: "ACTIVO",
     acciones: (
       <div>
-        <button type="button" className="btn btn-light mr-2">
-          Visualizar
-        </button>
-        <button type="button" className="btn btn-info">
-          Editar
-        </button>
+        <Link to={`/productos/1`}>
+          <button type="button" className="btn btn-info mr-2">
+            Editar
+          </button>
+        </Link>
       </div>
     ),
   },
@@ -71,12 +70,11 @@ const data = [
     estado: "ACTIVO",
     acciones: (
       <div>
-        <button type="button" className="btn btn-light mr-2">
-          Visualizar
-        </button>
-        <button type="button" className="btn btn-info">
-          Editar
-        </button>
+        <Link to={`/productos/2`}>
+          <button type="button" className="btn btn-info mr-2">
+            Editar
+          </button>
+        </Link>
       </div>
     ),
   },
@@ -90,16 +88,31 @@ const data = [
     estado: "ACTIVO",
     acciones: (
       <div>
-        <button type="button" className="btn btn-light mr-2">
-          Visualizar
-        </button>
-        <button type="button" className="btn btn-info">
-          Editar
-        </button>
+        <Link to={`/productos/3`}>
+          <button type="button" className="btn btn-info mr-2">
+            Editar
+          </button>
+        </Link>
       </div>
     ),
   },
 ];
+
+
+const conditionalRowStyles = [
+  {
+    when: row => row.cantidad < 10,
+    style: {
+      backgroundColor: "#ff00006b",
+      color: 'white',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+];
+
+
 export default function Productos() {
   return (
     <div>
@@ -121,6 +134,9 @@ export default function Productos() {
         pagination
         responsiveLayout="scroll"
         fixedHeader
+        conditionalRowStyles={conditionalRowStyles}
+
+
       />
     </div>
   );

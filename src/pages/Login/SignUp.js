@@ -2,15 +2,12 @@ import React, {useEffect, useState} from 'react'
 import { Container, Row, Card, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import SignupForm from '../../components/forms/SignupForm'
-import { useDispatch } from 'react-redux' 
 import validator from 'validator'
 import { isObjectEmpty } from '../../Helpers/Helpers'
-import { loginUser } from '../../actions/authActions'
 
 export default function Signin() {
 
   const [errors, setErrors] = useState({});
-  const dispatch = useDispatch();
 
   useEffect(() => {
     // Se monte el componente (iniciar)

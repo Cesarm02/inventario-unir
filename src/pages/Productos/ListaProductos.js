@@ -39,14 +39,14 @@ const data = [
     precio : 3500,
     unidad: "Caja",
     estado: "ACTIVO",
-    cantidad: "25",
+    cantidad: 25,
   },
   {
     id: 2,
     nombre: "Res",
     precio : 12000,
     unidad : "libra",
-    cantidad: "10",
+    cantidad: 10,
     estado: "ACTIVO",
   },
   {
@@ -55,13 +55,26 @@ const data = [
     precio: 9500,
     unidad: "3.5lt",
     estado: "ACTIVO",
-    cantidad: "3"
+    cantidad: 3
   },
 ];
 
+const conditionalRowStyles = [
+  {
+    when: row => row.cantidad < 10,
+    style: {
+      backgroundColor: "#ff00006b",
+      color: 'white',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+];
+
+
 export default function ListaProductos() {
   const {id} = useParams();
-
   return (
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
@@ -88,7 +101,8 @@ export default function ListaProductos() {
         data={data}
         pagination
         responsiveLayout="scroll"
-        fixedHeader
+        responsive
+        conditionalRowStyles={conditionalRowStyles}
       />
     </div>
   );

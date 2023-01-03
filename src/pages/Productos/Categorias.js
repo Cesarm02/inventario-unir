@@ -45,9 +45,11 @@ const data = [
             Visualizar
           </button>
         </Link>
-        <button type="button" className="btn btn-info">
-          Editar
-        </button>
+        <Link to={`/categorias/editar/1`}>
+          <button type="button" className="btn btn-info">
+            Editar
+          </button>
+        </Link>
       </div>
     ),
   },
@@ -63,9 +65,11 @@ const data = [
             Visualizar
           </button>
         </Link>
-        <button type="button" className="btn btn-info ">
-          Editar
-        </button>
+        <Link to={`/categorias/editar/2`}>
+          <button type="button" className="btn btn-info">
+            Editar
+          </button>
+        </Link>
       </div>
     ),
   },
@@ -81,9 +85,11 @@ const data = [
             Visualizar
           </button>
         </Link>
-        <button type="button" className="btn btn-info">
-          Editar
-        </button>
+        <Link to={`/categorias/editar/3`}>
+          <button type="button" className="btn btn-info">
+            Editar
+          </button>
+        </Link>
       </div>
     ),
   },
@@ -95,10 +101,11 @@ export default function Categorias() {
       <h3 className="alert alert-info mt-4 mr-auto">
         {" "}
         Categorias{" "}
-        
-        <button type="button" className="btn btn-outline-success float-right">
-          Agregar categoria
-        </button>
+        <Link to="/categorias/agregar">
+          <button type="button" className="btn btn-outline-success float-right">
+            Agregar categoria
+          </button>
+        </Link>
         <Link to="/">
           <button type="button" className="btn btn-outline-primary float-right mr-4 btn-volver">
             Home

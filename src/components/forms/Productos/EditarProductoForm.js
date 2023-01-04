@@ -70,7 +70,7 @@ export default function EditarProductoForm({errors, onSubmitCallback, id}) {
             </Col>
             <Col md="6" xs="12">
                 <Form.Group control="categoria">
-                    <Form.Label> Categoria</Form.Label>
+                    <Form.Label> Categoria del producto</Form.Label>
                     <Form.Select  aria-label="Default select example">
                             <option value="1">Producto Lacteos</option>
                             <option value="2">Producto Carnes</option>

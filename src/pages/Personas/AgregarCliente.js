@@ -12,7 +12,7 @@ export default function AgregarCliente() {
       // Se monte el componente (iniciar)
     });
   
-    const addCLiente = ({documento, nombre, apellido, tipoDocumento, estado, tipo}) => {
+    const addCLiente = ({documento, nombre, apellido, tipoDocumento, estado, telefono}) => {
       const errors = {};
       setErrors(errors);
   
@@ -27,7 +27,9 @@ export default function AgregarCliente() {
       if(validator.isEmpty(apellido)){
           errors.apellido = "El apellido del cliente es obligatorio";
       }
-
+      if(validator.isEmpty(telefono)){
+        errors.telefono = "El telefono del cliente es obligatorio";
+        }
       if(!isObjectEmpty(errors)){
           setErrors(errors);
           return;

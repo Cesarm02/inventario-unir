@@ -33,6 +33,10 @@ const columns = [
     selector: (row) => row.acciones,
     sortable: true,
     grow: 3
+  },{
+    name: "Telefono",
+    selector: (row) => row.telefono,
+    sortable: true,
   },
 ];
 
@@ -43,6 +47,7 @@ const data = [
     apellido: "Mesa Medrano",
     tipoDocumento: "CC",
     estado: "ACTIVO",
+    telefono: "312448604",
     acciones: (
       <div>
         <Link to={`/clientes/editar/1`}>
@@ -58,6 +63,7 @@ const data = [
     nombre: "Jhireth Zaray",
     apellido: "Gonzalez Flores",
     tipoDocumento: "CC",
+    telefono: "312448604",
     estado: "INACTIVO",
     acciones: (
       <div>
@@ -74,6 +80,7 @@ const data = [
     nombre: "Hisbeds",
     apellido: "Gomez Flores",
     tipoDocumento: "CC",
+    telefono: "312448604",
     estado: "ACTIVO",
     acciones: (
       <div>
@@ -87,6 +94,23 @@ const data = [
   },{
     documento: 332221544,
     nombre: "Hisbeds",
+    apellido: "Gomez Flores",
+    telefono: "312448604",
+    tipoDocumento: "CC",
+    estado: "ACTIVO",
+    acciones: (
+      <div>
+        <Link to={`/clientes/editar/3`}>
+          <button type="button" className="btn btn-info mr-2">
+            Editar
+          </button>
+        </Link>
+      </div>
+    ),
+  },{
+    documento: 332221544,
+    nombre: "Hisbeds",
+    telefono: "312448604",
     apellido: "Gomez Flores",
     tipoDocumento: "CC",
     estado: "ACTIVO",
@@ -102,21 +126,7 @@ const data = [
   },{
     documento: 332221544,
     nombre: "Hisbeds",
-    apellido: "Gomez Flores",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/3`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },{
-    documento: 332221544,
-    nombre: "Hisbeds",
+    telefono: "312448604",
     apellido: "Gomez Flores",
     tipoDocumento: "CC",
     estado: "ACTIVO",
@@ -132,6 +142,7 @@ const data = [
   },{
     documento: 1070626900,
     nombre: "Cesar Estiven",
+    telefono: "312448604",
     apellido: "Mesa Medrano",
     tipoDocumento: "CC",
     estado: "ACTIVO",
@@ -147,6 +158,7 @@ const data = [
   },{
     documento: 1070626900,
     nombre: "Cesar Estiven",
+    telefono: "312448604",
     apellido: "Mesa Medrano",
     tipoDocumento: "CC",
     estado: "ACTIVO",
@@ -162,6 +174,7 @@ const data = [
   },{
     documento: 1070626900,
     nombre: "Cesar Estiven",
+    telefono: "312448604",
     apellido: "Mesa Medrano",
     tipoDocumento: "CC",
     estado: "ACTIVO",
@@ -177,6 +190,7 @@ const data = [
   },{
     documento: 1070626900,
     nombre: "Cesar Estiven",
+    telefono: "312448604",
     apellido: "Mesa Medrano",
     tipoDocumento: "CC",
     estado: "ACTIVO",
@@ -192,6 +206,7 @@ const data = [
   },{
     documento: 1070626900,
     nombre: "Cesar Estiven",
+    telefono: "312448604",
     apellido: "Mesa Medrano",
     tipoDocumento: "CC",
     estado: "ACTIVO",

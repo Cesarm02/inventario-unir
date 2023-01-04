@@ -4,37 +4,30 @@ import validator from "validator";
 import { isObjectEmpty } from "../../Helpers/Helpers";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
-import EditarClienteForm from "../../components/forms/Clientes/EditarClienteForm";
+import EditarProveedorForm from "../../components/forms/Proveedor/EditarProveedorForm";
 
-export default function EditarCliente() {
+export default function EditarProveedor() {
   const { id } = useParams();
   const [errors, setErrors] = useState({});
   useEffect(() => {
     // Se monte el componente (iniciar)
   });
-  const editCliente = ({
-    documento,
-    nombre,
-    apellido,
-    tipoDocumento,
-    estado,
-    tipo,
-  }) => {
+  const editProv = ({ nombre, telefono }) => {
     const errors = {};
     setErrors(errors);
 
-    if (validator.isEmpty(documento)) {
-      errors.documento = "El documento del cliente es obligatorio";
+    if (validator.isEmpty(telefono)) {
+      errors.documento = "El Telefono del proveedor es obligatorio";
     }
 
     if (validator.isEmpty(nombre)) {
       errors.nombre = "El nombre del cliente es obligatorio";
     }
 
-    if (validator.isEmpty(apellido)) {
-      errors.apellido = "El apellido del cliente es obligatorio";
+    if (!isObjectEmpty(errors)) {
+      setErrors(errors);
+      return;
     }
-
     if (!isObjectEmpty(errors)) {
       setErrors(errors);
       return;
@@ -45,8 +38,8 @@ export default function EditarCliente() {
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
         {" "}
-        Clientes{" "}
-        <Link to="/clientes">
+        Proveedores{" "}
+        <Link to="/proveedores">
           <button
             type="button"
             className="btn btn-outline-primary float-right mr-4 btn-volver"
@@ -59,13 +52,13 @@ export default function EditarCliente() {
         <Row>
           <Col sm="12" md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
             <Card body>
-              <h3> Editar Cliente {id}</h3>
+              <h3> Editar Proveedor {id}</h3>
               <hr></hr>
-              <EditarClienteForm
+              <EditarProveedorForm
                 errors={errors}
-                onSubmitCallback={editCliente}
+                onSubmitCallback={editProv}
                 id={id}
-              ></EditarClienteForm>
+              ></EditarProveedorForm>
             </Card>
           </Col>
         </Row>

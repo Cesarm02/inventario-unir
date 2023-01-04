@@ -20,6 +20,8 @@ import EditarCategoria from "./pages/Categorias/EditarCategoria";
 import AgregarProductos from "./pages/Productos/AgregarProductos";
 import AgregarCliente from "./pages/Personas/AgregarCliente";
 import EditarCliente from "./pages/Personas/EditarCliente";
+import AgregarProveedor from "./pages/Personas/AgregarProveedor";
+import EditarProveedor from "./pages/Personas/EditarProveedor";
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
               <Route exact path="/clientes/agregar" element={<AgregarCliente/>} ></Route>
               <Route exact path="/clientes/editar/:id" element={<EditarCliente/>} ></Route>
               <Route exact path="/proveedores" element={<Proveedores/>} ></Route>
+              <Route exact path="/proveedores/agregar" element={<AgregarProveedor/>} ></Route>
+              <Route exact path="/proveedores/editar/:id" element={<EditarProveedor/>} ></Route>
               <Route path="*" element = {<NotFound/>}></Route>
           </Routes>
         </Container>

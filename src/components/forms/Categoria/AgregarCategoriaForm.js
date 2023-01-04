@@ -15,7 +15,7 @@ export default function AgregarCategoriaForm({errors, onSubmitCallback}) {
    
     <Form onSubmit={submitForm}>
 
-        <Form.Group control="categoria">
+        <Form.Group control=    "categoria">
             <Form.Label> Nombre categoria</Form.Label>
             <Form.Control 
                 type="text" 

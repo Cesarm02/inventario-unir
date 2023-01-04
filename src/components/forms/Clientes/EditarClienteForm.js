@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import {Form, Button, Row, Col} from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
-export default function EditarClienteForm({errors, onSubmitCallback, id}) {
-    const [documento, setDocumento] = useState(id);
-    const [nombre, setNombre] = useState(id);
-    const [apellido, setApellido] = useState(id);
-    const [tipoDocumento, setTipoDocumento] = useState("");
-    const [estado, setEstado] = useState("ACTIVO");
-    const [tipo, setTipo] = useState("CLIENTE");
-    const submitForm = (e) => {
-        e.preventDefault();
-        onSubmitCallback({
-          documento,
-          nombre,
-          apellido,
-          tipoDocumento,
-          estado,
-          tipo,
-        });
-      };
+export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
+  const [documento, setDocumento] = useState(id);
+  const [nombre, setNombre] = useState(id);
+  const [apellido, setApellido] = useState(id);
+  const [tipoDocumento, setTipoDocumento] = useState("");
+  const [estado, setEstado] = useState("ACTIVO");
+  const [telefono, setTelefono] = useState(id);
+  const submitForm = (e) => {
+    e.preventDefault();
+    onSubmitCallback({
+      documento,
+      nombre,
+      apellido,
+      tipoDocumento,
+      estado,
+      telefono,
+    });
+  };
 
   return (
     <Form onSubmit={submitForm}>
@@ -64,7 +64,7 @@ export default function EditarClienteForm({errors, onSubmitCallback, id}) {
           </Form.Group>
         </Col>
         <Col md="6" xs="12">
-        <Form.Group control="apellido">
+          <Form.Group control="apellido">
             <Form.Label> Apellido</Form.Label>
             <Form.Control
               type="text"
@@ -78,9 +78,22 @@ export default function EditarClienteForm({errors, onSubmitCallback, id}) {
           </Form.Group>
         </Col>
       </Row>
+      <Form.Group control="telefono">
+        <Form.Label> Telefono</Form.Label>
+        <Form.Control
+          type="number"
+          value={telefono}
+          onChange={(e) => setTelefono(e.target.value)}
+          placeholder="Telefono o Celular"
+          isInvalid={errors.telefono}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.telefono}
+        </Form.Control.Feedback>
+      </Form.Group>
       <Button variant="primary mt-2 " type="submit">
         Editar cliente
       </Button>
     </Form>
-  )
+  );
 }

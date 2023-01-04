@@ -7,7 +7,7 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
   const [apellido, setApellido] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
   const [estado, setEstado] = useState("ACTIVO");
-  const [tipo, setTipo] = useState("CLIENTE");
+  const [telefono, setTelefono] = useState("");
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
       apellido,
       tipoDocumento,
       estado,
-      tipo,
+      telefono,
     });
   };
   return (
@@ -66,7 +66,7 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
           </Form.Group>
         </Col>
         <Col md="6" xs="12">
-        <Form.Group control="apellido">
+          <Form.Group control="apellido">
             <Form.Label> Apellido</Form.Label>
             <Form.Control
               type="text"
@@ -81,6 +81,19 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
           </Form.Group>
         </Col>
       </Row>
+      <Form.Group control="telefono">
+        <Form.Label> Telefono</Form.Label>
+        <Form.Control
+          type="number"
+          value={telefono}
+          onChange={(e) => setTelefono(e.target.value)}
+          placeholder="Telefono o Celular"
+          isInvalid={errors.telefono}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.telefono}
+        </Form.Control.Feedback>
+      </Form.Group>
       <Button variant="primary mt-2 " type="submit">
         Agregar Cliente
       </Button>

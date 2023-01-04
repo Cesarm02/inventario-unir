@@ -4,35 +4,24 @@ import validator from "validator";
 import { isObjectEmpty } from "../../Helpers/Helpers";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
-import EditarClienteForm from "../../components/forms/Clientes/EditarClienteForm";
+import AgregarProveedorForm from "../../components/forms/Proveedor/AgregarProveedorForm";
 
-export default function EditarCliente() {
+export default function AgregarProveedor() {
   const { id } = useParams();
   const [errors, setErrors] = useState({});
   useEffect(() => {
     // Se monte el componente (iniciar)
   });
-  const editCliente = ({
-    documento,
-    nombre,
-    apellido,
-    tipoDocumento,
-    estado,
-    tipo,
-  }) => {
+  const editCliente = ({ nombre, telefono }) => {
     const errors = {};
     setErrors(errors);
 
-    if (validator.isEmpty(documento)) {
-      errors.documento = "El documento del cliente es obligatorio";
+    if (validator.isEmpty(telefono)) {
+      errors.documento = "El Telefono del proveedor es obligatorio";
     }
 
     if (validator.isEmpty(nombre)) {
       errors.nombre = "El nombre del cliente es obligatorio";
-    }
-
-    if (validator.isEmpty(apellido)) {
-      errors.apellido = "El apellido del cliente es obligatorio";
     }
 
     if (!isObjectEmpty(errors)) {
@@ -45,8 +34,8 @@ export default function EditarCliente() {
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
         {" "}
-        Clientes{" "}
-        <Link to="/clientes">
+        Proveedor{" "}
+        <Link to="/proveedores">
           <button
             type="button"
             className="btn btn-outline-primary float-right mr-4 btn-volver"
@@ -59,13 +48,13 @@ export default function EditarCliente() {
         <Row>
           <Col sm="12" md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
             <Card body>
-              <h3> Editar Cliente {id}</h3>
+              <h3> Agregar proveedor {id}</h3>
               <hr></hr>
-              <EditarClienteForm
+              <AgregarProveedorForm
                 errors={errors}
                 onSubmitCallback={editCliente}
                 id={id}
-              ></EditarClienteForm>
+              ></AgregarProveedorForm>
             </Card>
           </Col>
         </Row>

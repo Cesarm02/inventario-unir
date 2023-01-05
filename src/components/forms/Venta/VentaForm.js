@@ -7,9 +7,6 @@ export default function VentaForm() {
     { id: 2, nombre: "carne", cantidad: 2, precio: 2000},
     { id: 3, nombre: "pasta", cantidad: 5, precio: 2000},
   ];
-  const [cantidad, setCantidad] = useState("");
-  const [precio, setPrecio] = useState("");
-  const [total, setTotal] = useState("");
 
   const [elementos, setElementos] = useState([]);
 
@@ -28,7 +25,7 @@ export default function VentaForm() {
   const onChangeItem = (index, name, value) => {
     const elemenNew = [...elementos];
     elemenNew[index][name] = value;
-    if(name == "producto"){
+    if(name === "producto"){
       elemenNew[index].precio = data[index].precio; //se debe seleccionar el del producto
     }
     elemenNew[index].total = elemenNew[index].precio * elemenNew[index].cantidad;

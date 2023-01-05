@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 
@@ -32,8 +32,9 @@ const columns = [
     name: "Acciones",
     selector: (row) => row.acciones,
     sortable: true,
-    grow: 3
-  },{
+    grow: 3,
+  },
+  {
     name: "Telefono",
     selector: (row) => row.telefono,
     sortable: true,
@@ -91,7 +92,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 332221544,
     nombre: "Hisbeds",
     apellido: "Gomez Flores",
@@ -107,7 +109,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 332221544,
     nombre: "Hisbeds",
     telefono: "312448604",
@@ -123,7 +126,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 332221544,
     nombre: "Hisbeds",
     telefono: "312448604",
@@ -139,7 +143,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 1070626900,
     nombre: "Cesar Estiven",
     telefono: "312448604",
@@ -155,7 +160,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 1070626900,
     nombre: "Cesar Estiven",
     telefono: "312448604",
@@ -171,7 +177,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 1070626900,
     nombre: "Cesar Estiven",
     telefono: "312448604",
@@ -187,7 +194,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 1070626900,
     nombre: "Cesar Estiven",
     telefono: "312448604",
@@ -203,7 +211,8 @@ const data = [
         </Link>
       </div>
     ),
-  },{
+  },
+  {
     documento: 1070626900,
     nombre: "Cesar Estiven",
     telefono: "312448604",
@@ -222,15 +231,14 @@ const data = [
   },
 ];
 
-
 const conditionalRowStyles = [
   {
-    when: row => row.estado === "INACTIVO",
+    when: (row) => row.estado === "INACTIVO",
     style: {
       backgroundColor: "#ff00006b",
-      color: 'white',
-      '&:hover': {
-        cursor: 'pointer',
+      color: "white",
+      "&:hover": {
+        cursor: "pointer",
       },
     },
   },
@@ -248,7 +256,10 @@ export default function Clientes() {
           </button>
         </Link>
         <Link to="/">
-          <button type="button" className="btn btn-outline-primary float-right mr-4 btn-volver">
+          <button
+            type="button"
+            className="btn btn-outline-primary float-right mr-4 btn-volver"
+          >
             Home
           </button>
         </Link>
@@ -262,5 +273,5 @@ export default function Clientes() {
         conditionalRowStyles={conditionalRowStyles}
       />
     </div>
-  )
+  );
 }

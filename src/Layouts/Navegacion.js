@@ -25,9 +25,8 @@ export default function Navegacion() {
                         <NavDropdown.Item>Cotización</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Acciones" id="menu-dropdown">
-                        <NavDropdown.Item>Inventario</NavDropdown.Item>
-                        <NavDropdown.Item>Reportes</NavDropdown.Item>
-                        <NavDropdown.Item>Ajustes</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/inventario'}>Inventario</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/reportes'}>Reportes</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Admin" id="menu-dropdown">
                         <NavDropdown.Item>Auditoria</NavDropdown.Item>

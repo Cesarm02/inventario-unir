@@ -18,6 +18,8 @@ const columns = [
     name: "Acciones",
     selector: (row) => row.acciones,
     sortable: true,
+    grow: 3
+
   },{
     name: "Telefono",
     selector: (row) => row.telefono,
@@ -26,7 +28,7 @@ const columns = [
     name: "Descripcion",
     selector: (row) => row.descripcion,
     sortable: true,
-    grow: 3
+    grow: 2
   },
 ];
 
@@ -41,6 +43,11 @@ const data = [
         <Link to={`/proveedores/editar/1`}>
           <button type="button" className="btn btn-info mr-2">
             Editar
+          </button>
+        </Link>
+        <Link to={`/proveedores/1`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
           </button>
         </Link>
       </div>
@@ -58,6 +65,11 @@ const data = [
             Editar
           </button>
         </Link>
+        <Link to={`/proveedores/2`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
+          </button>
+        </Link>
       </div>
     ),
   },
@@ -71,6 +83,11 @@ const data = [
         <Link to={`/proveedores/editar/3`}>
           <button type="button" className="btn btn-info mr-2">
             Editar
+          </button>
+        </Link>
+        <Link to={`/proveedores/2`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
           </button>
         </Link>
       </div>
@@ -87,6 +104,11 @@ const data = [
             Editar
           </button>
         </Link>
+        <Link to={`/proveedores/2`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
+          </button>
+        </Link>
       </div>
     ),
   },{
@@ -99,6 +121,11 @@ const data = [
         <Link to={`/proveedores/editar/1`}>
           <button type="button" className="btn btn-info mr-2">
             Editar
+          </button>
+        </Link>
+        <Link to={`/proveedores/2`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
           </button>
         </Link>
       </div>
@@ -115,6 +142,11 @@ const data = [
             Editar
           </button>
         </Link>
+        <Link to={`/proveedores/2`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
+          </button>
+        </Link>
       </div>
     ),
   },{
@@ -127,6 +159,11 @@ const data = [
         <Link to={`/proveedores/editar/1`}>
           <button type="button" className="btn btn-info mr-2">
             Editar
+          </button>
+        </Link>
+        <Link to={`/proveedores/2`}>
+          <button type="button" className="btn btn-light mr-2">
+            Visualizar
           </button>
         </Link>
       </div>

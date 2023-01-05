@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 export default function EditarProveedorForm({ errors, onSubmitCallback, id }) {
     const [nombre, setNombre] = useState(id);
@@ -31,6 +31,7 @@ export default function EditarProveedorForm({ errors, onSubmitCallback, id }) {
       <Form.Group control="descripcion">
         <Form.Label> Descripcion</Form.Label>
         <Form.Control
+          as="textarea"
           type="text"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}

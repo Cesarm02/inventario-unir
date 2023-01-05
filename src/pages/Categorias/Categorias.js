@@ -1,7 +1,7 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
-import  "../../Css/Categoria.css";
+import "../../Css/Categoria.css";
 
 const columns = [
   {
@@ -28,7 +28,7 @@ const columns = [
     name: "Acciones",
     selector: (row) => row.acciones,
     sortable: true,
-    grow:1.5
+    grow: 1.5,
   },
 ];
 
@@ -37,7 +37,7 @@ const data = [
     id: 1,
     categoria: "Lacteos",
     estado: "ACTIVO",
-    descripcion:"Productos proveniente de la leche",
+    descripcion: "Productos proveniente de la leche",
     acciones: (
       <div>
         <Link to={`/categorias/1`}>
@@ -107,7 +107,10 @@ export default function Categorias() {
           </button>
         </Link>
         <Link to="/">
-          <button type="button" className="btn btn-outline-primary float-right mr-4 btn-volver">
+          <button
+            type="button"
+            className="btn btn-outline-primary float-right mr-4 btn-volver"
+          >
             Home
           </button>
         </Link>

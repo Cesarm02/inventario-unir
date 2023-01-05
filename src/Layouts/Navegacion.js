@@ -20,9 +20,9 @@ export default function Navegacion() {
                         <NavDropdown.Item as={NavLink} to={'/proveedores'}>Proveedores</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Tienda" id="menu-dropdown">
-                        <NavDropdown.Item>Venta</NavDropdown.Item>
-                        <NavDropdown.Item>Compra</NavDropdown.Item>
-                        <NavDropdown.Item>Cotización</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/ventas'}>Venta</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/compras'}>Compra</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to={'/cotizacion'}>Cotización</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Acciones" id="menu-dropdown">
                         <NavDropdown.Item as={NavLink} to={'/inventario'}>Inventario</NavDropdown.Item>

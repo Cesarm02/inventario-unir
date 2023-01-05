@@ -137,8 +137,6 @@ export default function Productos() {
         responsiveLayout="scroll"
         fixedHeader
         conditionalRowStyles={conditionalRowStyles}
-
-
       />
     </div>
   );

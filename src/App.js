@@ -25,6 +25,9 @@ import EditarProveedor from "./pages/Personas/EditarProveedor";
 import Inventario from "./pages/Inventario/Inventario";
 import VerProveedores from "./pages/Personas/VerProveedores";
 import Reporte from "./pages/Reportes/Reporte";
+import Venta from "./pages/Venta/Venta"
+import Compra from "./pages/Venta/Compra"
+import Cotizacion from "./pages/Venta/Cotizacion";
 
 function App() {
   return (
@@ -53,6 +56,9 @@ function App() {
               <Route exact path="/proveedores/agregar" element={<AgregarProveedor/>} ></Route>
               <Route exact path="/proveedores/editar/:id" element={<EditarProveedor/>} ></Route>
               <Route exact path="/inventario" element={<Inventario/>} ></Route>
+              <Route exact path="/ventas" element={<Venta/>} ></Route>
+              <Route exact path="/compras" element={<Compra/>} ></Route>
+              <Route exact path="/cotizacion" element={<Cotizacion/>} ></Route>
               <Route exact path="/reportes" element={<Reporte/>} ></Route>
               <Route path="*" element = {<NotFound/>}></Route>
           </Routes>

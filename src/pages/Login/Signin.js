@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import { Container, Row, Card, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container, Row, Card, Col, Alert} from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 import SigninForm from '../../components/forms/SigninForm'
-import { useDispatch } from 'react-redux' 
+import { useDispatch, useSelector } from 'react-redux' 
 import validator from 'validator'
 import { isObjectEmpty } from '../../Helpers/Helpers'
 import { loginUser } from '../../actions/authActions'
@@ -11,9 +11,13 @@ export default function Signin() {
 
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  const loggedIn = useSelector(state => state.auth.loggedIn);
+  const history = useNavigate();
 
   useEffect(() => {
-    // Se monte el componente (iniciar)
+    if(loggedIn) {
+      history("/");
+    }
   });
 
   const login = ({email, password}) => {
@@ -41,7 +45,14 @@ export default function Signin() {
 
       });
     //llamar nuestra función loggin que vamos a crear en actions
+      dispatch(loginUser({email, password}))
+        .then(response => {
 
+        })
+        .catch(err => {
+          setErrors({auth: "No se puede iniciar sesión con esas credenciales"});
+        });
+        
   }
 
   return (
@@ -49,6 +60,9 @@ export default function Signin() {
       <Row>
         <Col sm="12" md ={{ span:8, offset: 2}} lg={{span:6, offset:3}}>
           <Card body>
+
+            {errors.auth && <Alert variant="danger">{errors.auth}</Alert>}
+
             <h3> Iniciar sesión</h3><hr></hr>
             <SigninForm errors={errors} onSubmitCallback={login}></SigninForm>
             <div className="mt-4">

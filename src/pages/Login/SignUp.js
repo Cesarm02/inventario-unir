@@ -1,19 +1,26 @@
 import React, {useEffect, useState} from 'react'
-import { Container, Row, Card, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container, Row, Card, Col, Alert } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux' 
 import SignupForm from '../../components/forms/SignupForm'
 import validator from 'validator'
 import { isObjectEmpty } from '../../Helpers/Helpers'
+import {loginUser, registerUser} from "../../actions/authActions"
 
 export default function Signin() {
 
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const loggedIn = useSelector(state => state.auth.loggedIn);
+  const history = useNavigate();
 
   useEffect(() => {
-    // Se monte el componente (iniciar)
+    if(loggedIn) {
+      history("/");
+    }
   });
 
-  const login = ({email, password, firstName, lastName}) => {
+  const register = ({email, password, firstName, lastName}) => {
     const errors = {};
     setErrors(errors);
 
@@ -38,15 +45,14 @@ export default function Signin() {
       return;
     }
 
-    // dispatch(loginUser({email, password}))
-    //   .then(response => {
-        
-    //   })
-    //   .catch(error => {
-
-    //   });
-    //llamar nuestra función loggin que vamos a crear en actions
-
+    dispatch(registerUser({email, password, firstName, lastName}))
+      .then(response => {
+        //Logear el usuario
+        dispatch(loginUser({email, password}))
+      })
+      .catch(error => {
+          setErrors({registerError : error.response.data.mensaje})
+      });
   }
 
   return (
@@ -54,8 +60,11 @@ export default function Signin() {
       <Row>
         <Col sm="12" md ={{ span:8, offset: 2}} lg={{span:6, offset:3}}>
           <Card body>
+            
+          {errors.registerError && <Alert variant="danger">{errors.registerError}</Alert>}
+
             <h3> Crear cuenta</h3><hr></hr>
-            <SignupForm errors={errors} onSubmitCallback={login}></SignupForm>
+            <SignupForm errors={errors} onSubmitCallback={register}></SignupForm>
             <div className="mt-4">
               <Link to={"/signin"}>Ya tienes una cuenta? Inicia sesión aquí</Link>
             </div>

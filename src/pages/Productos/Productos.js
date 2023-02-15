@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { PRODUCTO_ENDPOINT } from '../../Helpers/endpoints';
 
 const columns = [
   {
@@ -13,11 +15,12 @@ const columns = [
     selector: (row) => row.nombre,
     sortable: true,
   },
-  {
-    name: "Categoria",
-    selector: (row) => row.categoria,
+ // Aca da error por ser solo id
+ {
+   name: "Categoria",
+    selector: (row) => row.categoria.nombre,
     sortable: true,
-  },
+ },
   {
     name: "Precio",
     selector: (row) => row.precio,
@@ -34,6 +37,10 @@ const columns = [
     sortable: true,
   },
   {
+    name: "unidad",
+    selector: (row) => row.unidad,
+  },
+  {
     name: "Acciones",
     selector: (row) => row.acciones,
     sortable: true,
@@ -41,62 +48,6 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    nombre: "Leche lt",
-    categoria: "Lacteos",
-    precio : 3500,
-    cantidad : 10,
-    descripcion: "Productos procedentes de lacteos",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/productos/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    id: 2,
-    nombre: "Res lb",
-    categoria: "Carnes",
-    precio : 12000,
-    cantidad : 6,
-    descripcion: "Todo lo relacionado a carniceria",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/productos/editar/2`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    id: 3,
-    categoria: "Bebidas",
-    nombre: "Coca Cola 2.5lt",
-    precio: 9500,
-    cantidad: 8,
-    descripcion: "Referencia a gaseosas - jugos - cervezas - te",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/productos/editar/3`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-];
 
 
 const conditionalRowStyles = [
@@ -114,6 +65,23 @@ const conditionalRowStyles = [
 
 
 export default function Productos() {
+
+  const [productos, setProductos] = useState([]);
+  const [fetching, setfetching] = useState(true);
+
+  useEffect(() => {
+    axios.get(PRODUCTO_ENDPOINT).then( response => {
+      const data = response.data;
+      setfetching(false);
+      setProductos(data);
+      console.log(response.data);
+      
+    }).catch(e => {
+      console.error(e);
+      setfetching(false);
+    });
+  }, []);
+
   return (
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
@@ -132,7 +100,7 @@ export default function Productos() {
       </h3>
       <DataTable
         columns={columns}
-        data={data}
+        data = {productos}
         pagination
         responsiveLayout="scroll"
         fixedHeader

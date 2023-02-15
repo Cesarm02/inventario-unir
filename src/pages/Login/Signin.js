@@ -37,13 +37,6 @@ export default function Signin() {
       return;
     }
 
-    dispatch(loginUser({email, password}))
-      .then(response => {
-
-      })
-      .catch(error => {
-
-      });
     //llamar nuestra función loggin que vamos a crear en actions
       dispatch(loginUser({email, password}))
         .then(response => {

@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, {useState, useEffect} from 'react'
 import {Form, Button, Row, Col} from "react-bootstrap";
+import { PRODUCTOID_ENDPOINT } from "../../../Helpers/endpoints";
 
 export default function EditarProductoForm({errors, onSubmitCallback, id}) {
     const [producto, setProducto] = useState(id);
@@ -7,6 +9,18 @@ export default function EditarProductoForm({errors, onSubmitCallback, id}) {
     const [estado, setEstado] = useState(id);
     const [unidad, setUnidad] = useState(id);
     const [categoria, setCategoria] = useState(id);
+    
+    const [productoActual, setProductoActual] = useState({});
+    const data = {};
+
+    useEffect( () => {
+        axios.get(PRODUCTOID_ENDPOINT+id).then(response => {
+            const data = response.data;
+            console.log(data);
+            setProductoActual(data);
+
+        })
+    },[]);
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -20,7 +34,7 @@ export default function EditarProductoForm({errors, onSubmitCallback, id}) {
             <Form.Label> Nombre Producto</Form.Label>
             <Form.Control 
                 type="text" 
-                value={producto}
+                value={productoActual.nombre}
                 onChange={e => setProducto(e.target.value )}
                 isInvalid={errors.producto}
             />

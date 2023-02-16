@@ -3,6 +3,7 @@ import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { PRODUCTO_ENDPOINT } from '../../Helpers/endpoints';
+import Boton from "../../components/Botones/BotonEditar";
 
 const columns = [
   {
@@ -48,8 +49,6 @@ const columns = [
   },
 ];
 
-
-
 const conditionalRowStyles = [
   {
     when: row => row.cantidad < 10,
@@ -63,7 +62,6 @@ const conditionalRowStyles = [
   },
 ];
 
-
 export default function Productos() {
 
   const [productos, setProductos] = useState([]);
@@ -72,9 +70,13 @@ export default function Productos() {
   useEffect(() => {
     axios.get(PRODUCTO_ENDPOINT).then( response => {
       const data = response.data;
+      console.log(response.data);
+      data.forEach(da => {
+        da.acciones = <Boton id={da.id}></Boton>;
+      });
+      
       setfetching(false);
       setProductos(data);
-      console.log(response.data);
       
     }).catch(e => {
       console.error(e);

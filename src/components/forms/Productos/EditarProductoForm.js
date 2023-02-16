@@ -18,7 +18,8 @@ export default function EditarProductoForm({errors, onSubmitCallback, id}) {
             const data = response.data;
             console.log(data);
             setProductoActual(data);
-
+        }).catch(e => {
+            console.error(e);
         })
     },[]);
 
@@ -48,7 +49,7 @@ export default function EditarProductoForm({errors, onSubmitCallback, id}) {
                     <Form.Label> Precio</Form.Label>
                     <Form.Control 
                         type="number" 
-                        value={precio}
+                        value={productoActual.precio}
                         onChange={e => setPrecio(e.target.value )}
                         isInvalid={errors.precio}
                     />
@@ -60,9 +61,9 @@ export default function EditarProductoForm({errors, onSubmitCallback, id}) {
             <Col md="6" xs="12">
                 <Form.Group control="estado">
                     <Form.Label> Estado del producto</Form.Label>
-                        <Form.Select  aria-label="Default select example">
-                            <option value="1">Estado activo</option>
-                            <option value="2">Estado inactivo</option>
+                        <Form.Select  name="estado" id="plan">
+                            <option value="ACTIVO">ACTIVO</option>
+                            <option value="INACTIVO">INACTIVO</option>
                         </Form.Select>
                 </Form.Group>
             </Col>
@@ -73,7 +74,7 @@ export default function EditarProductoForm({errors, onSubmitCallback, id}) {
                     <Form.Label> Unidad</Form.Label>
                     <Form.Control 
                         type="text" 
-                        value={unidad}
+                        value={productoActual.unidad}
                         onChange={e => setUnidad(e.target.value )}
                         isInvalid={errors.unidad}
                     />

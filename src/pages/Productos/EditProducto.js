@@ -13,22 +13,18 @@ export default function EditProducto() {
     // Se monte el componente (iniciar)
   });
 
-  const editarProducto = ({producto, precio, unidad}) => {
+  const editarProducto = ({nombreProducto, precioProducto, unidad}) => {
     const errors = {};
     setErrors(errors);
 
-    if(validator.isEmpty(producto)){
-        errors.producto = "El nombre del producto es obligatorio";
+    if(validator.isEmpty(nombreProducto)){
+        errors.nombreProducto = "El nombre del producto es obligatorio";
     }
 
-    if(validator.isEmpty(precio)){
-        errors.precio = "El precio del producto es obligatorio";
+    if(validator.isEmpty(precioProducto)){
+        errors.precioProducto = "El precio del producto es obligatorio";
     }
 
-    if(validator.isEmpty(unidad)){
-        errors.precio = "La unidad del producto es obligatorio";
-    }
-    
     if(!isObjectEmpty(errors)){
         setErrors(errors);
         return;

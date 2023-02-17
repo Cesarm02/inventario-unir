@@ -70,7 +70,6 @@ export default function Productos() {
   useEffect(() => {
     axios.get(PRODUCTO_ENDPOINT).then( response => {
       const data = response.data;
-      console.log(response.data);
       data.forEach(da => {
         da.acciones = <Boton id={da.id}></Boton>;
       });

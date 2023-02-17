@@ -5,23 +5,37 @@ import { isObjectEmpty } from "../../Helpers/Helpers";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 import AgregarProveedorForm from "../../components/forms/Proveedor/AgregarProveedorForm";
-
+import {registerProveedor} from "../../actions/proveedor"
+import { useDispatch} from 'react-redux'
 export default function AgregarProveedor() {
   const { id } = useParams();
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
   useEffect(() => {
     // Se monte el componente (iniciar)
   });
-  const editCliente = ({ nombre, telefono }) => {
+  const addProveedor = ({ nombre, estado, telefono, descripcion, documento,direccion,email }) => {
     const errors = {};
     setErrors(errors);
 
     if (validator.isEmpty(telefono)) {
-      errors.documento = "El Telefono del proveedor es obligatorio";
+      errors.telefono = "El Telefono del proveedor es obligatorio";
     }
 
     if (validator.isEmpty(nombre)) {
-      errors.nombre = "El nombre del cliente es obligatorio";
+      errors.nombre = "El nombre del proveedor es obligatorio";
+    }
+    if (validator.isEmpty(descripcion)) {
+      errors.descripcion = "la descripcion del proveedor es obligatorio";
+    }
+    if (validator.isEmpty(documento)) {
+      errors.documento = "el nit del proveedor es obligatorio";
+    }
+    if (validator.isEmpty(direccion)) {
+      errors.direccion = "la direccion del proveedor es obligatorio";
+    }
+    if (validator.isEmpty(email)) {
+      errors.email = "el email del proveedor es obligatorio";
     }
 
     if (!isObjectEmpty(errors)) {
@@ -29,6 +43,10 @@ export default function AgregarProveedor() {
       return;
     }
     //llamar nuestra función
+    dispatch(registerProveedor({nombre, estado, telefono, descripcion, documento, direccion, email}))
+    .catch(error => {
+          setErrors({registerError : error.response.data.mensaje})
+      });
   };
   return (
     <div>
@@ -52,7 +70,7 @@ export default function AgregarProveedor() {
               <hr></hr>
               <AgregarProveedorForm
                 errors={errors}
-                onSubmitCallback={editCliente}
+                onSubmitCallback={addProveedor}
                 id={id}
               ></AgregarProveedorForm>
             </Card>

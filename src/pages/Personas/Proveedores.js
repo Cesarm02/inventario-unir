@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
-
-
+import axios from 'axios';
+import { PROVEEDOR_ENDPOINT } from '../../Helpers/endpoints';
+import Boton from "../../components/Botones/botonEditarProv";
 const columns = [
   {
     name: "Nombre",
@@ -32,145 +33,6 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    nombre: "Alqueria",
-    estado: "ACTIVO",
-    telefono:"12345",
-    descripcion: "Productos lacteos",
-    acciones: (
-      <div>
-        <Link to={`/proveedores/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-        <Link to={`/proveedores/1`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    nombre: "Carnes S.A.S",
-    estado: "ACTIVO",
-    telefono:"12345",
-    descripcion: "Productos carnes",
-    acciones: (
-      <div>
-        <Link to={`/proveedores/editar/2`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-        <Link to={`/proveedores/2`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    nombre: "Nestle",
-    estado: "ACTIVO",
-    telefono:"12345",
-    descripcion: "Productos Nestle",
-    acciones: (
-      <div>
-        <Link to={`/proveedores/editar/3`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-        <Link to={`/proveedores/2`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-      </div>
-    ),
-  },{
-    nombre: "Margarita",
-    estado: "ACTIVO",
-    telefono:"1231231245",
-    descripcion: "Papas",
-    acciones: (
-      <div>
-        <Link to={`/proveedores/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-        <Link to={`/proveedores/2`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-      </div>
-    ),
-  },{
-    nombre: "Margarina",
-    estado: "ACTIVO",
-    telefono:"12345",
-    descripcion: "Mantequilla - queso",
-    acciones: (
-      <div>
-        <Link to={`/proveedores/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-        <Link to={`/proveedores/2`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-      </div>
-    ),
-  },{
-    nombre: "Familia",
-    estado: "INACTIVO",
-    telefono:"12345",
-    descripcion: "Servilletas - papel higienico",
-    acciones: (
-      <div>
-        <Link to={`/proveedores/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-        <Link to={`/proveedores/2`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-      </div>
-    ),
-  },{
-    nombre: "Plaza Erika",
-    estado: "ACTIVO",
-    telefono:"12345",
-    descripcion: "Productos de plaza, frutas y verduras",
-    acciones: (
-      <div>
-        <Link to={`/proveedores/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-        <Link to={`/proveedores/2`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-      </div>
-    ),
-  }
-];
-
 
 const conditionalRowStyles = [
   {
@@ -186,15 +48,36 @@ const conditionalRowStyles = [
 ];
 
 
-export default function Proveedores() {
+export default function Proveedor() {
+
+  const [proveedor, setProveedor] = useState([]);
+  const [fetching, setfetching] = useState(true);
+
+  useEffect(() => {
+    axios.get(PROVEEDOR_ENDPOINT).then( response => {
+      const data = response.data;
+      console.log(response.data);
+      data.forEach(da => {
+        da.acciones = <Boton id={da.id}></Boton>;
+      });
+      
+      setfetching(false);
+      setProveedor(data);
+      
+    }).catch(e => {
+      console.error(e);
+      setfetching(false);
+    });
+  }, []);
+
   return (
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
         {" "}
-        Proveedores{" "}
+        Proveedor{" "}
         <Link to="/proveedores/agregar">
           <button type="button" className="btn btn-outline-success float-right">
-            Agregar Proveedor
+            Agregar proveedor
           </button>
         </Link>
         <Link to="/">
@@ -205,12 +88,12 @@ export default function Proveedores() {
       </h3>
       <DataTable
         columns={columns}
-        data={data}
+        data = {proveedor}
         pagination
         responsiveLayout="scroll"
         fixedHeader
         conditionalRowStyles={conditionalRowStyles}
       />
     </div>
-  )
+  );
 }

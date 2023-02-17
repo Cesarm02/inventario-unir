@@ -12,7 +12,7 @@ export default function EditarProveedor() {
   useEffect(() => {
     // Se monte el componente (iniciar)
   });
-  const editProv = ({ nombre, telefono }) => {
+  const editProv = ({ nombre, telefono, descripcion, direccion, documento, email }) => {
     const errors = {};
     setErrors(errors);
 
@@ -21,7 +21,20 @@ export default function EditarProveedor() {
     }
 
     if (validator.isEmpty(nombre)) {
-      errors.nombre = "El nombre del cliente es obligatorio";
+      errors.nombre = "El nombre del proveedor es obligatorio";
+    }
+
+    if (validator.isEmpty(descripcion)) {
+      errors.nombre = "la descripcion del proveedor es obligatorio";
+    }
+    if (validator.isEmpty(direccion)) {
+      errors.nombre = "la direccion del proveedor es obligatorio";
+    }
+    if (validator.isEmpty(documento)) {
+      errors.nombre = "El documento del proveedor es obligatorio";
+    }
+    if (validator.isEmpty(email)) {
+      errors.nombre = "El email del proveedor es obligatorio";
     }
 
     if (!isObjectEmpty(errors)) {

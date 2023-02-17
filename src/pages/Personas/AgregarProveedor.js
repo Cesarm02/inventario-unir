@@ -48,7 +48,7 @@ export default function AgregarProveedor() {
         <Row>
           <Col sm="12" md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
             <Card body>
-              <h3> Agregar proveedor {id}</h3>
+              <h3> Agregar proveedor 2 {id}</h3>
               <hr></hr>
               <AgregarProveedorForm
                 errors={errors}

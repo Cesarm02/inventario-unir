@@ -71,7 +71,7 @@ export default function Productos() {
     axios.get(PRODUCTO_ENDPOINT).then( response => {
       const data = response.data;
       data.forEach(da => {
-        da.acciones = <Boton id={da.id}></Boton>;
+        da.acciones = <Boton id={da.id} ruta={"/productos/editar/"}></Boton>;
       });
       
       setfetching(false);

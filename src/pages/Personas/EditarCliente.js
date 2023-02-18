@@ -5,10 +5,18 @@ import { isObjectEmpty } from "../../Helpers/Helpers";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 import EditarClienteForm from "../../components/forms/Clientes/EditarClienteForm";
+import axios from 'axios';
+import { CLIENTES_ENDPOINT,CLIENTEID_ENDPOINT } from '../../Helpers/endpoints';
+import Boton from "../../components/Botones/BotonEditar";
+
 
 export default function EditarCliente() {
   const { id } = useParams();
   const [errors, setErrors] = useState({});
+
+  const [clientes, setClientes] = useState([]);
+  const [fetching, setfetching] = useState(true);
+
   useEffect(() => {
     // Se monte el componente (iniciar)
   });
@@ -39,6 +47,21 @@ export default function EditarCliente() {
       setErrors(errors);
       return;
     }
+
+    axios.get(CLIENTEID_ENDPOINT).then( response => {
+      const data = response.data;
+      console.log(response.data);
+      data.forEach(da => {
+        da.acciones = <Boton id={da.id} ruta={"/clientes/editar/"}></Boton>;
+      });
+      
+      setfetching(false);
+      setClientes(data);
+      
+    }).catch(e => {
+      console.error(e);
+      setfetching(false);
+    });
     //llamar nuestra función
   };
   return (

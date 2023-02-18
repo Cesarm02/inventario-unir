@@ -20,11 +20,7 @@ export default function AgregarCategoriaForm({errors, onSubmitCallback}) {
         data.nombre= categoria;
         data.descripcion= descripcion;
         data.estado=estado.estado.value;
-        console.log(data);
-
-
         axios.post(CATEGORIA_ENDPOINT, data).then(response => {
-            console.log(response);
             history("/categorias");
         }).catch(e => {
             console.log(e);

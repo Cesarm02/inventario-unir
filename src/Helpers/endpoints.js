@@ -6,7 +6,7 @@ export const REGISTER_ENDPOINT = API_URL + "/users";
 export const PRODUCTO_ENDPOINT = API_URL + "/producto";
 export const PRODUCTOID_ENDPOINT = API_URL + "/producto/";
 
-export const CATEGORIA_ENDPOINT = API_URL + "/categoria";
+export const CATEGORIA_ENDPOINT = API_URL + "/categoria/";
 
 
 

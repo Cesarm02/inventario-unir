@@ -45,8 +45,8 @@ export default function Categorias() {
       data.forEach(da => {
         da.acciones = 
         <div>
-          <Boton id={da.id} ruta={"categorias/"}></Boton>
-          <BotonVisualizar id={da.id} ruta={"/categorias/editar/"}></BotonVisualizar>
+          <Boton id={da.id} ruta={"/categorias/editar/"}></Boton>
+          <BotonVisualizar id={da.id} ruta={"/categorias/"}></BotonVisualizar>
         </div>
       });
         console.log(response)

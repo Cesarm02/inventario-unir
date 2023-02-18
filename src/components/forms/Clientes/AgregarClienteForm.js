@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { CLIENTES_ENDPOINT} from "../../../Helpers/endpoints";
+import axios from 'axios';
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router";
+import Select from "react-select";
 
 export default function AgregarCliente({ errors, onSubmitCallback }) {
   const [documento, setDocumento] = useState("");
@@ -8,6 +13,10 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
   const [tipoDocumento, setTipoDocumento] = useState("");
   const [estado, setEstado] = useState("ACTIVO");
   const [telefono, setTelefono] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [email, setEmail] = useState("");
+
+  const history = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -18,8 +27,32 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
       tipoDocumento,
       estado,
       telefono,
+      direccion,
+      email,
     });
   };
+
+  const data = {};
+  data.documento = documento;
+  data.nombre = nombre;
+  data.apellido = apellido;
+  data.tipoDocumento = tipoDocumento;
+  data.estado = estado;
+  data.telefono = telefono;
+  data.direccion=direccion;
+  data.email=email;
+  console.log( data);
+
+  axios.post(CLIENTES_ENDPOINT, data).then(response => {
+    toast.success("Cliente creado correctamente", {
+      position: toast.POSITION.TOP_CENTER
+    })
+
+    history("/clientes")
+  }).catch(e => {
+    console.log(e);
+  })
+
   return (
     <Form onSubmit={submitForm}>
       <Row>
@@ -40,12 +73,17 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
         </Col>
         <Col md="6" xs="12">
           <Form.Group control="tipoDocumento">
-            <Form.Label> Tipo de documento</Form.Label>
-            <Form.Select aria-label="Default select example">
-              <option value="1">Cedula de ciudadania</option>
-              <option value="2">Tarjeta de identidad</option>
-              <option value="3">Cedula de extranjeria</option>
-            </Form.Select>
+            <Form.Label> Tipo de Documento</Form.Label>
+            <Form.Control
+              type="text"
+              value={tipoDocumento}
+              onChange={(e) => setTipoDocumento(e.target.value)}
+              placeholder="tipoDocumento"
+              isInvalid={errors.tipoDocumento}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.tipoDocumento}
+            </Form.Control.Feedback>
           </Form.Group>
         </Col>
       </Row>
@@ -80,6 +118,36 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
+        <Col md="6" xs="12">
+          <Form.Group control="direccion">
+            <Form.Label> Direccion</Form.Label>
+            <Form.Control
+              type="text"
+              value={direccion}
+              onChange={(e) => setDireccion(e.target.value)}
+              placeholder="Direccion"
+              isInvalid={errors.direccion}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.direccion}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+        <Col md="6" xs="12">
+          <Form.Group control="email">
+            <Form.Label> Email</Form.Label>
+            <Form.Control
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              isInvalid={errors.email}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.email}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Col>
       </Row>
       <Form.Group control="telefono">
         <Form.Label> Telefono</Form.Label>
@@ -99,4 +167,5 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
       </Button>
     </Form>
   );
+
 }

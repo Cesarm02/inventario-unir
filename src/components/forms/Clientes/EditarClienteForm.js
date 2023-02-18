@@ -1,13 +1,69 @@
-import React, { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import axios from 'axios';
+import React, {useState, useEffect} from 'react'
+import {Form, Button, Row, Col} from "react-bootstrap";
+import { CLIENTEID_ENDPOINT, CLIENTES_ENDPOINT } from "../../../Helpers/endpoints";
+import Select from 'react-select'
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify"
 
 export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
-  const [documento, setDocumento] = useState(id);
-  const [nombre, setNombre] = useState(id);
-  const [apellido, setApellido] = useState(id);
-  const [tipoDocumento, setTipoDocumento] = useState("");
-  const [estado, setEstado] = useState("ACTIVO");
-  const [telefono, setTelefono] = useState(id);
+
+  const [clienteActual, setClienteActual] = useState({});
+
+  const [documento, setDocumentoCliente] = useState("");
+  const [nombre, setNombreCliente] = useState("");
+  const [apellido, setApellidoCliente] = useState("");
+  const [tipoDocumento, setTipoDocumentoCliente] = useState("");
+  const [estado, setEstadoCliente] = useState("ACTIVO");
+  const [telefono, setTelefonoCliente] = useState("");
+  const [direccion, setDireccionCliente] = useState("");
+  const [email, setEmailCliente] = useState("");
+
+  const [listOptionCate, setOptionCate] = useState([]);
+  const [selectCat, setSelectCat] = useState([]);
+  const [selectEst, setSelectEst] = useState([]);
+  var aux2 = {};
+  const history = useNavigate();
+
+  useEffect( () => {
+    axios.get(CLIENTEID_ENDPOINT+id).then(response => {
+        setClienteActual(response.data);
+        setNombreCliente(response.data.nombre)
+        setDocumentoCliente(response.data.precio)
+        setApellidoCliente(response.data.apellido)
+        setTipoDocumentoCliente(response.data.tipoDocumento)
+        setEstadoCliente(response.data.estado)
+        setTelefonoCliente(response.data.telefono)
+        setDireccionCliente(response.data.direccion)
+        setEmailCliente(response.data.email)
+
+        //Imprimir el cliente
+       // const aux = {value: response.data.categoria.id, label:response.data.categoria.nombre};
+       // setSelectCat(aux);
+        if(response.data.estado === "ACTIVO"){
+            aux2 = {value: response.data.estado, label:"ACTIVO"};
+        }else{
+            aux2 = {value: response.data.estado, label:"INACTIVO"};
+        }
+        setSelectEst(aux2);
+    }).catch(e => {
+        console.error(e);
+    })
+},[]);
+
+useEffect( () => {
+    axios.get(CLIENTES_ENDPOINT).then(response => {
+        const data = response.data;
+        data.forEach(element => {
+            const aux = {value : element.id, label: element.nombre}
+            listOptionCate.push(aux);
+        });
+        setOptionCate(listOptionCate);
+    }).catch(e => {
+        console.error(e);
+    })
+}, []);
+
   const submitForm = (e) => {
     e.preventDefault();
     onSubmitCallback({
@@ -20,6 +76,67 @@ export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
     });
   };
 
+  const data = {};
+  data.documento = documento;
+  data.nombre = nombre;
+  data.apellido = apellido;
+  data.tipoDocumento = tipoDocumento;
+  data.estado = estado;
+  data.telefono = telefono;
+  data.direccion=direccion;
+  data.email=email;
+  console.log( data);
+
+  axios.post(CLIENTES_ENDPOINT, data).then(response => {
+    toast.success("Cliente creado correctamente", {
+      position: toast.POSITION.TOP_CENTER
+    })
+
+    history("/clientes")
+  }).catch(e => {
+    console.log(e);
+  })
+
+const changeNombre= (nombre) => {
+    let nombreCliente = nombre.target.value;
+    setNombreCliente(nombreCliente);
+}
+
+const changeDocumento= (documento) => {
+    let documentoCliente = documento.target.value;
+    setDocumentoCliente(documentoCliente);
+}
+
+const changeApellido= (apellido) => {
+  let apellidoCliente = apellido.target.value;
+  setApellidoCliente(apellidoCliente);
+}
+
+const changeTipoDocumento= (tipoDocumento) => {
+  let tipoDocumentoCliente = tipoDocumento.target.value;
+  setTipoDocumentoCliente(tipoDocumentoCliente);
+}
+
+  const estadoChanges = (estado) => {
+    setEstadoCliente({estado});
+  };
+
+  const changeTelefono= (telefono) => {
+    let telefonoCliente = telefono.target.value;
+    setTelefonoCliente(telefonoCliente);
+  }
+
+  const changeDireccion= (direccion) => {
+    let direccionCliente = direccion.target.value;
+    setDireccionCliente(direccionCliente);
+  }
+
+  const changeEmail= (email) => {
+    let emailCliente = email.target.value;
+    setEmailCliente(emailCliente);
+  }
+
+
   return (
     <Form onSubmit={submitForm}>
       <Row>
@@ -29,7 +146,7 @@ export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
             <Form.Control
               type="number"
               value={documento}
-              onChange={(e) => setDocumento(e.target.value)}
+              onChange={changeDocumento}
               isInvalid={errors.documento}
             />
             <Form.Control.Feedback type="invalid">
@@ -55,7 +172,7 @@ export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
             <Form.Control
               type="text"
               value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
+              onChange={changeNombre}
               isInvalid={errors.nombre}
             />
             <Form.Control.Feedback type="invalid">
@@ -69,7 +186,7 @@ export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
             <Form.Control
               type="text"
               value={apellido}
-              onChange={(e) => setApellido(e.target.value)}
+              onChange={changeApellido}
               isInvalid={errors.apellido}
             />
             <Form.Control.Feedback type="invalid">
@@ -83,7 +200,7 @@ export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
         <Form.Control
           type="number"
           value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
+          onChange={changeTelefono}
           placeholder="Telefono o Celular"
           isInvalid={errors.telefono}
         />

@@ -39,6 +39,7 @@ export default function EditarCliente() {
       setErrors(errors);
       return;
     }
+    
     //llamar nuestra función
   };
   return (

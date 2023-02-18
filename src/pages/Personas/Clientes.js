@@ -27,8 +27,13 @@ const columns = [
     sortable: true,
   },
   {
-    name: "Estado",
-    selector: (row) => row.estado,
+    name: "Telefono",
+    selector: (row) => row.telefono,
+    sortable: true,
+  },
+  {
+    name: "Correo",
+    selector: (row) => row.email,
     sortable: true,
   },
   {
@@ -36,12 +41,7 @@ const columns = [
     selector: (row) => row.acciones,
     sortable: true,
     grow: 3,
-  },
-  {
-    name: "Telefono",
-    selector: (row) => row.telefono,
-    sortable: true,
-  },
+  }
 ];
 
 const conditionalRowStyles = [

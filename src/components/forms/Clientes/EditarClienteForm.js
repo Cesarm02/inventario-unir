@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useParams} from 'react'
 import {Form, Button, Row, Col} from "react-bootstrap";
 import { CLIENTEID_ENDPOINT, CLIENTES_ENDPOINT } from "../../../Helpers/endpoints";
 import Select from 'react-select'
@@ -9,7 +9,6 @@ import { toast } from "react-toastify"
 export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
 
   const [clienteActual, setClienteActual] = useState({});
-
   const [documento, setDocumentoCliente] = useState("");
   const [nombre, setNombreCliente] = useState("");
   const [apellido, setApellidoCliente] = useState("");
@@ -29,7 +28,7 @@ export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
     axios.get(CLIENTEID_ENDPOINT+id).then(response => {
         setClienteActual(response.data);
         setNombreCliente(response.data.nombre)
-        setDocumentoCliente(response.data.precio)
+        setDocumentoCliente(response.data.documento)
         setApellidoCliente(response.data.apellido)
         setTipoDocumentoCliente(response.data.tipoDocumento)
         setEstadoCliente(response.data.estado)
@@ -52,7 +51,7 @@ export default function EditarClienteForm({ errors, onSubmitCallback, id }) {
 },[]);
 
 useEffect( () => {
-    axios.get(CLIENTES_ENDPOINT).then(response => {
+    axios.get(CLIENTEID_ENDPOINT).then(response => {
         const data = response.data;
         data.forEach(element => {
             const aux = {value : element.id, label: element.nombre}
@@ -73,10 +72,13 @@ useEffect( () => {
       tipoDocumento,
       estado,
       telefono,
+      email,
+      direccion
     });
-  };
+ 
 
   const data = {};
+  data.id=id;
   data.documento = documento;
   data.nombre = nombre;
   data.apellido = apellido;
@@ -86,9 +88,9 @@ useEffect( () => {
   data.direccion=direccion;
   data.email=email;
   console.log( data);
-
-  axios.post(CLIENTES_ENDPOINT, data).then(response => {
-    toast.success("Cliente creado correctamente", {
+////////////API PUT
+  axios.put(CLIENTES_ENDPOINT, data).then(response => {
+    toast.success("Cliente modificado correctamente", {
       position: toast.POSITION.TOP_CENTER
     })
 
@@ -96,6 +98,7 @@ useEffect( () => {
   }).catch(e => {
     console.log(e);
   })
+};
 
 const changeNombre= (nombre) => {
     let nombreCliente = nombre.target.value;
@@ -206,6 +209,32 @@ const changeTipoDocumento= (tipoDocumento) => {
         />
         <Form.Control.Feedback type="invalid">
           {errors.telefono}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group control="email">
+        <Form.Label> Email</Form.Label>
+        <Form.Control
+          type="text"
+          value={email}
+          onChange={changeEmail}
+          placeholder="Email"
+          isInvalid={errors.email}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.email}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group control="direccion">
+        <Form.Label> Direccion</Form.Label>
+        <Form.Control
+          type="text"
+          value={direccion}
+          onChange={changeDireccion}
+          placeholder="direccion"
+          isInvalid={errors.direccion}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.direccion}
         </Form.Control.Feedback>
       </Form.Group>
       <Button variant="primary mt-2 " type="submit">

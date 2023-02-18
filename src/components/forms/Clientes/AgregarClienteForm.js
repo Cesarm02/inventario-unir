@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { CLIENTES_ENDPOINT} from "../../../Helpers/endpoints";
 import axios from 'axios';
@@ -15,6 +15,13 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
   const [telefono, setTelefono] = useState("");
   const [direccion, setDireccion] = useState("");
   const [email, setEmail] = useState("");
+   const listadocumento= [
+    
+    { label : "CEDULA", value : "CC"}, 
+    { label : "NIT", value : "NIT"},
+    { label : "PASAPORTE", value : "PT"},
+    { label : "TARJETA IDENTIDAD", value : "TI"}
+  ]
 
   const history = useNavigate();
 
@@ -30,28 +37,33 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
       direccion,
       email,
     });
+
+    const data = {};
+    data.documento = documento;
+    data.nombre = nombre;
+    data.apellido = apellido;
+    data.tipoDocumento = tipoDocumento;
+    data.estado = estado;
+    data.telefono = telefono;
+    data.direccion=direccion;
+    data.email=email;
+    console.log( data);
+
+      axios.post(CLIENTES_ENDPOINT, data).then(response => {
+        toast.success("Cliente creado correctamente", {
+          position: toast.POSITION.TOP_CENTER
+        })
+    
+        history("/clientes")
+      }).catch(e => {
+        console.log(e);
+      })
+  
   };
-
-  const data = {};
-  data.documento = documento;
-  data.nombre = nombre;
-  data.apellido = apellido;
-  data.tipoDocumento = tipoDocumento;
-  data.estado = estado;
-  data.telefono = telefono;
-  data.direccion=direccion;
-  data.email=email;
-  console.log( data);
-
-  axios.post(CLIENTES_ENDPOINT, data).then(response => {
-    toast.success("Cliente creado correctamente", {
-      position: toast.POSITION.TOP_CENTER
-    })
-
-    history("/clientes")
-  }).catch(e => {
-    console.log(e);
-  })
+  const llenardocumento= (opcion)=>{
+    setTipoDocumento({opcion})
+    console.log({opcion});
+  }
 
   return (
     <Form onSubmit={submitForm}>
@@ -71,22 +83,21 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
+
         <Col md="6" xs="12">
           <Form.Group control="tipoDocumento">
             <Form.Label> Tipo de Documento</Form.Label>
-            <Form.Control
-              type="text"
-              value={tipoDocumento}
-              onChange={(e) => setTipoDocumento(e.target.value)}
-              placeholder="tipoDocumento"
-              isInvalid={errors.tipoDocumento}
-            />
+            <Select options={listadocumento} onChange={llenardocumento}>
+
+
+            </Select>
             <Form.Control.Feedback type="invalid">
               {errors.tipoDocumento}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
       </Row>
+
       <Row>
         <Col md="6" xs="12">
           <Form.Group control="nombre">

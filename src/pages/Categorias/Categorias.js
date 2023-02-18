@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 import "../../Css/Categoria.css";
+import axios from "axios";
+import { useEffect } from "react";
+import { CATEGORIA_ENDPOINT } from "../../Helpers/endpoints";
+import Boton from "../../components/Botones/BotonEditar";
+import BotonVisualizar from "../../components/Botones/BotonVisualizar";
 
 const columns = [
   {
@@ -10,8 +15,8 @@ const columns = [
     sortable: true,
   },
   {
-    name: "Categoria",
-    selector: (row) => row.categoria,
+    name: "Nombre",
+    selector: (row) => row.nombre,
     sortable: true,
   },
   {
@@ -32,70 +37,25 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    categoria: "Lacteos",
-    estado: "ACTIVO",
-    descripcion: "Productos proveniente de la leche",
-    acciones: (
-      <div>
-        <Link to={`/categorias/1`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-        <Link to={`/categorias/editar/1`}>
-          <button type="button" className="btn btn-info">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    id: 2,
-    categoria: "Carnes",
-    descripcion: "Todo lo relacionado a carniceria",
-    estado: "ACTIVO",
-    acciones: (
-      <div className="">
-        <Link to={`/categorias/2`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-        <Link to={`/categorias/editar/2`}>
-          <button type="button" className="btn btn-info">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    id: 3,
-    categoria: "Bebidas",
-    descripcion: "Referencia a gaseosas - jugos - cervezas - te",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/categorias/3`}>
-          <button type="button" className="btn btn-light mr-2">
-            Visualizar
-          </button>
-        </Link>
-        <Link to={`/categorias/editar/3`}>
-          <button type="button" className="btn btn-info">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-];
-
 export default function Categorias() {
+  const [categorias, setCategorias] = useState("");
+  useEffect(() => {
+    axios.get(CATEGORIA_ENDPOINT).then(response => {
+      const data = response.data;
+      data.forEach(da => {
+        da.acciones = 
+        <div>
+          <Boton id={da.id} ruta={"/categorias/editar/"}></Boton>
+          <BotonVisualizar id={da.id} ruta={"/categorias/"}></BotonVisualizar>
+        </div>
+      });
+        console.log(response)
+        setCategorias(response.data);
+      }).catch(e => {
+      console.log(e);
+    })
+  }, [])
+
   return (
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
@@ -117,7 +77,7 @@ export default function Categorias() {
       </h3>
       <DataTable
         columns={columns}
-        data={data}
+        data={categorias}
         pagination
         responsiveLayout="scroll"
         fixedHeader

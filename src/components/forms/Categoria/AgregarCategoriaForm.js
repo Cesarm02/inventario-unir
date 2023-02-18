@@ -1,16 +1,47 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import {Form, Button} from "react-bootstrap";
+import { useNavigate } from 'react-router';
+import Select from 'react-select'
+import { CATEGORIA_ENDPOINT } from '../../../Helpers/endpoints';
 
 export default function AgregarCategoriaForm({errors, onSubmitCallback}) {
  
     const [categoria, setCategoria] = useState("");
     const [descripcion, setDescripcion] = useState("");
+    const [estado, setEstado] = useState("");
+    const history = useNavigate();
 
     const submitForm = (e) => {
         e.preventDefault();
-        onSubmitCallback({ categoria, descripcion});
+        onSubmitCallback({ categoria, descripcion, estado});
+
+        const data = {};
+        data.nombre= categoria;
+        data.descripcion= descripcion;
+        data.estado=estado.estado.value;
+        console.log(data);
+
+
+        axios.post(CATEGORIA_ENDPOINT, data).then(response => {
+            console.log(response);
+            history("/categorias");
+        }).catch(e => {
+            console.log(e);
+        })
+
     }
 
+    const listOption = 
+    [
+        { label : "ACTIVO", value : "ACTIVO"}, 
+        { label : "INACTIVO", value : "INACTIVO"}
+    ];
+  
+    const estadoChanges = (estado) => {
+        setEstado({estado});
+      };
+  
   return (
    
     <Form onSubmit={submitForm}>
@@ -40,6 +71,11 @@ export default function AgregarCategoriaForm({errors, onSubmitCallback}) {
             <Form.Control.Feedback type="invalid">
                     {errors.descripcion}
             </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group control="estado">
+        <Form.Label> Estado del producto</Form.Label>
+        <Select
+            options={listOption} onChange={estadoChanges} />
         </Form.Group>
 
         <Button variant="primary mt-2 " type="submit">

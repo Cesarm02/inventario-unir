@@ -14,12 +14,12 @@ export default function EditarCategoria() {
     // Se monte el componente (iniciar)
   });
 
-  const editCategoria = ({categoria, descripcion}) => {
+  const editCategoria = ({nombre, descripcion, estado}) => {
     const errors = {};
     setErrors(errors);
 
-    if(validator.isEmpty(categoria)){
-        errors.categoria = "La categoria es obligatoria";
+    if(validator.isEmpty(nombre)){
+        errors.nombre = "La categoria es obligatoria";
     }
 
     if(validator.isEmpty(descripcion)){

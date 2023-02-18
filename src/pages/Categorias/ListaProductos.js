@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {useParams} from "react-router"
 import DataTable from "react-data-table-component";
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
+import axios from 'axios';
+import { CATEGORIA_ENDPOINT } from '../../Helpers/endpoints';
 
 const columns = [
   {
@@ -73,12 +75,34 @@ const conditionalRowStyles = [
 ];
 
 
+
 export default function ListaProductos() {
   const {id} = useParams();
+
+  const [categoriaActual, setCategoriaActual] = useState();
+  const [nombreCategoria, setCategoria] = useState("");
+  const [ descripcionCat, setDescripcionCat] = useState("");
+  const [ estadoCat, setEstadoCat] = useState("");
+  const [cantidadCat, setCantidad] = useState("");
+  const [productos, setProductos] = useState();
+  useEffect(() => {
+    axios.get(CATEGORIA_ENDPOINT+id).then(response => {
+      const data = response.data;
+      setCategoriaActual(data);
+      setCategoria(data.nombre);
+      setEstadoCat(data.estado);
+      setDescripcionCat(data.descripcion);
+      setCantidad(data.productos.length)
+      setProductos(data.productos);
+    }).catch(e => {
+      console.log(e);
+    })
+  },[]);
+
   return (
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
-        Lista de productos - Categoria = {id} (Aqui irá nombre) {" "}
+        Lista de productos - Categoria = {nombreCategoria}
         <Link to={"/categorias"}>
           <button type="button" className="btn btn-outline-primary float-right">
             Volver
@@ -86,19 +110,19 @@ export default function ListaProductos() {
         </Link>
       </h3>
       <Card className="mb-4">
-      <Card.Header>Nombre Categoria</Card.Header>
+      <Card.Header>Nombre {nombreCategoria}</Card.Header>
         <Card.Body>
           <Card.Text>
-            <b>Descripcion :</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. <br></br>
-            <b>Estado: </b>ACTIVO,<br></br>
-            <b>Cantidad productos :</b> 123
+            <b>Descripcion :</b> {descripcionCat} <br></br>
+            <b>Estado: </b>{estadoCat},<br></br>
+            <b>Cantidad productos :</b> {cantidadCat}
           </Card.Text>
         </Card.Body>
       </Card>
 
       <DataTable
         columns={columns}
-        data={data}
+        data={productos}
         pagination
         responsiveLayout="scroll"
         responsive

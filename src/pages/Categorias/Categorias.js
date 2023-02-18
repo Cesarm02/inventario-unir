@@ -49,7 +49,6 @@ export default function Categorias() {
           <BotonVisualizar id={da.id} ruta={"/categorias/"}></BotonVisualizar>
         </div>
       });
-        console.log(response)
         setCategorias(response.data);
       }).catch(e => {
       console.log(e);

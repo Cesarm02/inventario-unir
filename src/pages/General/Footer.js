@@ -9,7 +9,7 @@ export default function Footer() {
       >
         © 2023 Copyright
         <br></br>
-        Desarrollador : Cesar Estiven Mesa Medrano
+        Desarrolladores : Cesar Estiven Mesa Medrano, Astrid Vanessa Padilla Jiménez, Alexander Torres Ramírez, Mariluz Bedoya Vásquez
       </div>
     </footer>
   );

@@ -65,6 +65,8 @@ const productoChanges = (producto) =>{
   const onChangeItem = (index, name, value) => {
     const elemenNew = [...elementos];
     elemenNew[index][name] = value;
+    console.log(index + " - " + name + " -  " + value);
+
     if(name === "producto"){
       elemenNew[index].precio = data[index].precio; //se debe seleccionar el del producto
     }

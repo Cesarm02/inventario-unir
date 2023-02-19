@@ -40,7 +40,6 @@ export default function AgregarProductoForm({ errors, onSubmitCallback }) {
                 const aux = {value : element.id, label: element.nombre}
                 listOptionCate.push(aux);
             });
-            console.log(listOptionCate)
             setOptionCate(listOptionCate);
         }).catch(e => {
             console.error(e);

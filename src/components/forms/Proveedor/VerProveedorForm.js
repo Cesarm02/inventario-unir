@@ -1,21 +1,42 @@
-import React, { useState } from "react";
+import axios from 'axios';
+import React, {useState, useEffect} from 'react'
 import { Form } from "react-bootstrap";
-
+import { PROVEEDORID_ENDPOINT } from "../../../Helpers/endpoints";
 export default function VerProveedorForm({ id }) {
-  const [nombre, setNombre] = useState(id);
-  const [estado, setEstado] = useState("ACTIVO");
-  const [telefono, setTelefono] = useState(id);
-  const [descripcion, setDescripcion] = useState(id);
-
+  const [estadoProv, setEstado] = useState("");
+    const [nombreProv, setNombre] = useState("");
+    const [telefonoProv, setTelefono] = useState("");
+    const [descripcionProv, setDescripcion] = useState("");
+    const [documentoProv, setDocumento] = useState("");
+    const [direccionProv, setDireccion] = useState("");
+    const [emailProv, setEmail] = useState("");
+    const [proveedorActual, setProveedorActual] = useState({});
+    useEffect( () => {
+      axios.get(PROVEEDORID_ENDPOINT+id).then(response => {
+          const data = response.data;
+          console.log(data);
+          setProveedorActual(data);
+          setNombre(data.nombre);
+          setTelefono(data.telefono);
+          setDescripcion(data.descripcion);
+          setDocumento(data.documento);
+          setDireccion(data.direccion);
+          setEmail(data.email);
+          setEstado(data.estado);
+          
+      }).catch(e => {
+          console.error(e);
+      })
+  },[]);
   return (
     <Form>
       <Form.Group control="nombre">
-        <Form.Label> Nombre</Form.Label>
+        <Form.Label> Nombre </Form.Label>
         <Form.Control
           disabled
           type="text"
           onChange={(e) => setNombre(e.target.value)}
-          value={nombre}
+          value={nombreProv}
         />
       </Form.Group>
       <Form.Group control="descripcion">
@@ -25,7 +46,7 @@ export default function VerProveedorForm({ id }) {
           disabled
           type="text"
           onChange={(e) => setDescripcion(e.target.value)}
-          value={descripcion}
+          value={descripcionProv}
         />
       </Form.Group>
       <Form.Group control="estado">
@@ -34,7 +55,7 @@ export default function VerProveedorForm({ id }) {
           type="text"
           disabled
           onChange={(e) => setEstado(e.target.value)}
-          value={estado}
+          value={estadoProv}
         />
       </Form.Group>
       <Form.Group control="telefono">
@@ -42,8 +63,35 @@ export default function VerProveedorForm({ id }) {
         <Form.Control
           disabled
           type="number"
-          value={telefono}
+          value={telefonoProv}
           onChange={(e) => setTelefono(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group control="documento">
+        <Form.Label> Nit</Form.Label>
+        <Form.Control
+          disabled
+          type="number"
+          value={documentoProv}
+          onChange={(e) => setDocumento(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group control="direccion">
+        <Form.Label> Direccion</Form.Label>
+        <Form.Control
+          disabled
+          type="text"
+          value={direccionProv}
+          onChange={(e) => setDireccion(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group control="email">
+        <Form.Label> Email</Form.Label>
+        <Form.Control
+          disabled
+          type="text"
+          value={emailProv}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Form.Group>
     </Form>

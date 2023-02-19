@@ -24,7 +24,7 @@ export default function VerProveedores() {
         <Row>
           <Col sm="12" md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
             <Card body>
-              <h3> Visualizar Proveedor {id}</h3>
+              <h3> Visualizar Proveedor</h3>
               <hr></hr>
               <VerProveedorForm id={id}></VerProveedorForm>
             </Card>

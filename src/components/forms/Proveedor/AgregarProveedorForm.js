@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 
 export default function AgregarProveedorForm({ errors, onSubmitCallback }) {
   const [nombre, setNombre] = useState("");
   const [estado, setEstado] = useState("ACTIVO");
   const [telefono, setTelefono] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [documento, setDocumento] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [email, setEmail] = useState("");
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -14,10 +17,13 @@ export default function AgregarProveedorForm({ errors, onSubmitCallback }) {
       estado,
       telefono,
       descripcion,
+      documento,
+      direccion,
+      email
     });
   };
   return (
-    <Form onSubmit={submitForm}>
+    <Form onSubmit={submitForm} method="POST">
       <Form.Group control="nombre">
         <Form.Label> Nombre</Form.Label>
         <Form.Control
@@ -53,9 +59,49 @@ export default function AgregarProveedorForm({ errors, onSubmitCallback }) {
         <Form.Control.Feedback type="invalid">
           {errors.telefono}
         </Form.Control.Feedback>
+
+      </Form.Group>
+      <Form.Group control="documento">
+        <Form.Label>NIT</Form.Label>
+        <Form.Control
+          type="text"
+          value={documento}
+          onChange={(e) => setDocumento(e.target.value)}
+          placeholder="Nit"
+          isInvalid={errors.documento}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.documento}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group control="direccion">
+        <Form.Label> Direccion</Form.Label>
+        <Form.Control
+          type="text"
+          value={direccion}
+          onChange={(e) => setDireccion(e.target.value)}
+          placeholder="direccion"
+          isInvalid={errors.direccion}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.direccion}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group control="email">
+        <Form.Label> Email</Form.Label>
+        <Form.Control
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="email"
+          isInvalid={errors.email}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.email}
+        </Form.Control.Feedback>
       </Form.Group>
       <Button variant="primary mt-2 " type="submit">
-        Agregar Cliente
+        Agregar Proveedor
       </Button>
     </Form>
   );

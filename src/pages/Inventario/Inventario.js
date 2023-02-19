@@ -33,33 +33,6 @@ const columns = [
     }
   ];
   
-  const data = [
-    {
-      id: 1,
-      nombre: "Leche",
-      precio : 3500,
-      unidad: "Caja",
-      estado: "ACTIVO",
-      cantidad: 25,
-    },
-    {
-      id: 2,
-      nombre: "Res",
-      precio : 12000,
-      unidad : "libra",
-      cantidad: 10,
-      estado: "ACTIVO",
-    },
-    {
-      id: 3,
-      nombre: "Coca Cola",
-      precio: 9500,
-      unidad: "3.5lt",
-      estado: "ACTIVO",
-      cantidad: 3
-    },
-  ];
-  
 const conditionalRowStyles = [
     {
       when: row => row.cantidad < 10,

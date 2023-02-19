@@ -11,6 +11,8 @@ export const CATEGORIA_ENDPOINT = API_URL + "/categoria/";
 export const CLIENTES_ENDPOINT = API_URL + "/cliente";
 export const CLIENTEID_ENDPOINT = API_URL + "/cliente/";
 
+export const COMPRA_ENDPOINT = API_URL + "/compra";
+
 
 
 

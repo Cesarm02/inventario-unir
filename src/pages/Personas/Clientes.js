@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useState, useEffect} from 'react'
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { CLIENTES_ENDPOINT } from '../../Helpers/endpoints';
+import Boton from "../../components/Botones/BotonEditar";
 
 const columns = [
   {
@@ -24,8 +27,13 @@ const columns = [
     sortable: true,
   },
   {
-    name: "Estado",
-    selector: (row) => row.estado,
+    name: "Telefono",
+    selector: (row) => row.telefono,
+    sortable: true,
+  },
+  {
+    name: "Correo",
+    selector: (row) => row.email,
     sortable: true,
   },
   {
@@ -33,202 +41,7 @@ const columns = [
     selector: (row) => row.acciones,
     sortable: true,
     grow: 3,
-  },
-  {
-    name: "Telefono",
-    selector: (row) => row.telefono,
-    sortable: true,
-  },
-];
-
-const data = [
-  {
-    documento: 1070626900,
-    nombre: "Cesar Estiven",
-    apellido: "Mesa Medrano",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    telefono: "312448604",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 123456789,
-    nombre: "Jhireth Zaray",
-    apellido: "Gonzalez Flores",
-    tipoDocumento: "CC",
-    telefono: "312448604",
-    estado: "INACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/2`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 332221544,
-    nombre: "Hisbeds",
-    apellido: "Gomez Flores",
-    tipoDocumento: "CC",
-    telefono: "312448604",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/3`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 332221544,
-    nombre: "Hisbeds",
-    apellido: "Gomez Flores",
-    telefono: "312448604",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/3`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 332221544,
-    nombre: "Hisbeds",
-    telefono: "312448604",
-    apellido: "Gomez Flores",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/3`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 332221544,
-    nombre: "Hisbeds",
-    telefono: "312448604",
-    apellido: "Gomez Flores",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/3`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 1070626900,
-    nombre: "Cesar Estiven",
-    telefono: "312448604",
-    apellido: "Mesa Medrano",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 1070626900,
-    nombre: "Cesar Estiven",
-    telefono: "312448604",
-    apellido: "Mesa Medrano",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 1070626900,
-    nombre: "Cesar Estiven",
-    telefono: "312448604",
-    apellido: "Mesa Medrano",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 1070626900,
-    nombre: "Cesar Estiven",
-    telefono: "312448604",
-    apellido: "Mesa Medrano",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
-  {
-    documento: 1070626900,
-    nombre: "Cesar Estiven",
-    telefono: "312448604",
-    apellido: "Mesa Medrano",
-    tipoDocumento: "CC",
-    estado: "ACTIVO",
-    acciones: (
-      <div>
-        <Link to={`/clientes/editar/1`}>
-          <button type="button" className="btn btn-info mr-2">
-            Editar
-          </button>
-        </Link>
-      </div>
-    ),
-  },
+  }
 ];
 
 const conditionalRowStyles = [
@@ -245,6 +58,27 @@ const conditionalRowStyles = [
 ];
 
 export default function Clientes() {
+
+  const [clientes, setClientes] = useState([]);
+  const [fetching, setfetching] = useState(true);
+
+  useEffect(() => {
+    axios.get(CLIENTES_ENDPOINT).then( response => {
+      const data = response.data;
+      console.log(response.data);
+      data.forEach(da => {
+        da.acciones = <Boton id={da.id} ruta={"/clientes/editar/"}></Boton>;
+      });
+      
+      setfetching(false);
+      setClientes(data);
+      
+    }).catch(e => {
+      console.error(e);
+      setfetching(false);
+    });
+  }, []);
+
   return (
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
@@ -266,7 +100,7 @@ export default function Clientes() {
       </h3>
       <DataTable
         columns={columns}
-        data={data}
+        data={clientes}
         pagination
         responsiveLayout="scroll"
         fixedHeader

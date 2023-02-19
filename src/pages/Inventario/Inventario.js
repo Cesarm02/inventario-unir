@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Busqueda from "./Busqueda";
 import DataTable from "react-data-table-component";
+import axios from "axios";
+import { PRODUCTOID_ENDPOINT } from "../../Helpers/endpoints";
 
 const columns = [
     {
@@ -71,6 +73,24 @@ const conditionalRowStyles = [
     },
   ];
 export default function Inventario() {
+  
+  const [productos, setProducto] = useState();
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    axios.get(PRODUCTOID_ENDPOINT).then(response => {
+      const data = response.data;
+      setProducto(data);
+      var aux = 0;
+      data.forEach(element => {
+        aux = aux + element.precio;
+      });
+      setTotal(aux);
+    }).catch((e) => {
+      console.log(e);
+    })
+  }, []);
+  
   return (
     <div>
       <h3 className="alert alert-info mt-4 mr-auto">
@@ -88,12 +108,12 @@ export default function Inventario() {
       <div className="col-md-12 izquierda alertas">
         <Busqueda></Busqueda>
         <div className="alert alert-primary col-md-5 izquierda" role="alert">
-          Valor inventario $500.200
+          Valor inventario ${total}
         </div>
       </div>
       <DataTable
         columns={columns}
-        data={data}
+        data={productos}
         pagination
         responsiveLayout="scroll"
         responsive

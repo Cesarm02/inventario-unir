@@ -44,7 +44,7 @@ export default function VentaForm({onSubmitCallback}) {
   const onChangeItem = (index, name, value) => {
     const elemenNew = [...elementos];
     elemenNew[index][name] = value;
-    if (name == "producto") {
+    if (name === "producto") {
       elemenNew[index].precio = dataProducto[value].precio; //se debe seleccionar el del producto
     }
     elemenNew[index].total =
@@ -66,7 +66,7 @@ export default function VentaForm({onSubmitCallback}) {
   const submitForm = (e) => {
     e.preventDefault();
     onSubmitCallback({
-      producto
+      total
       //ACA MODIFICAR ESTO; PARA LO DE LA VENTA
     });
   };

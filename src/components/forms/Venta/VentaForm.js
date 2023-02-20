@@ -21,12 +21,14 @@ export default function VentaForm({ errors, onSubmitCallback}) {
   const [cliente_id, setCliente_Id] = useState("");
   const [clid, setClid] = useState("");
   const [listadoProducto, setListadoProduct] = useState([]);
+  const [clienteVenta, setClienteVenta] = useState("");
   const history = useNavigate();
   useEffect(() => {
     axios
       .get(PRODUCTO_ENDPOINT)
       .then((response) => {
         const data = response.data;
+        console.log(data);
         setDataProducto(data);
         data.forEach((element) => {
           const aux = { value: element.id, label: element.nombre };
@@ -50,7 +52,6 @@ export default function VentaForm({ errors, onSubmitCallback}) {
           listCliente.push(aux);
         });
         setCliente_Id(listCliente);
-        console.log(listCliente);
       })
       .catch((e) => {
         console.log(e);
@@ -77,7 +78,7 @@ export default function VentaForm({ errors, onSubmitCallback}) {
     
     elemenNew[index][name] = value;
     if (name === "producto_id") {
-      elemenNew[index].precio = dataProducto[value].precio; //se debe seleccionar el del producto
+      elemenNew[index].precio = dataProducto[index].precio; //se debe seleccionar el del producto
     }
     elemenNew[index].total =
       elemenNew[index].precio * elemenNew[index].cantidad;
@@ -94,7 +95,6 @@ export default function VentaForm({ errors, onSubmitCallback}) {
     }
   };
 
-  console.log(elementos);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ export default function VentaForm({ errors, onSubmitCallback}) {
      clid,
      fecha,
      cliente_id,
-     listadoProducto
+     listadoProducto,
       
     });
     const data = {};
@@ -113,14 +113,11 @@ export default function VentaForm({ errors, onSubmitCallback}) {
       data.numero_factura = numFactura;
       data.totalp = 300;
       data.fecha="2022-12-12";
-      data.cliente_id=11;
+      data.cliente_id=cliente_id[0].value;
       data.numeroFactura=22;
       data.productos=elementos;
-      console.log("antes");
       console.log(data);
-      console.log("despues");
       axios.post(VENTA_ENDPOINT, data).then(response => {
-        console.log(response);
         history("/")
       }).catch(e => {
           console.log(e);
@@ -131,6 +128,9 @@ export default function VentaForm({ errors, onSubmitCallback}) {
     
   };
   
+  const clienteChange = (cliente) => {
+    setClienteVenta(cliente.value);
+  };
   
   return (
     <>
@@ -142,7 +142,7 @@ export default function VentaForm({ errors, onSubmitCallback}) {
                   <Form.Label> Seleccionar cliente</Form.Label>
                   <Select 
                     options={cliente_id}
-                    
+                    onChange={clienteChange}
                   ></Select>
                 </Form.Group>
               </Col>

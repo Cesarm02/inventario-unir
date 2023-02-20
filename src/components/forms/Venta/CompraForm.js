@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 
 export default function CompraForm({ onSubmitCallback }) {
-  const [producto, setProducto] = useState([]);
+  const [productos, setProducto] = useState([]);
   const [listProducto, setListProduct] = useState([]);
   const [dataProducto, setDataProducto] = useState("");
   const [total, setTotal] = useState("");
@@ -65,6 +65,8 @@ export default function CompraForm({ onSubmitCallback }) {
   }, []);
 
   const [elementos, setElementos] = useState([]);
+  const [elementos2, setElementos2] = useState([]);
+
 
   const addElement = () => {
     const elemenNew = [...elementos];
@@ -75,13 +77,20 @@ export default function CompraForm({ onSubmitCallback }) {
     });
     setElementos(elemenNew);
   };
-
-  
+  const addElement2 = () => {
+    const elemenNew2 = [...elementos2];
+    elemenNew2.push({
+      cantidad: 0,
+      precio: 0,
+      total: 0,
+    });
+    setElementos2(elemenNew2);
+  };
 
   const onChangeItem = (index, name, value) => {
     const elemenNew = [...elementos];
     elemenNew[index][name] = value;
-    if (name === "producto") {
+    if (name === "productos") {
       elemenNew[index].precio = dataProducto[value].precio; //se debe seleccionar el del producto
     }
     elemenNew[index].total =
@@ -104,7 +113,7 @@ export default function CompraForm({ onSubmitCallback }) {
 
     e.preventDefault();
     onSubmitCallback({
-      producto,
+      productos,
       proveedor_id,
       fecha,
       cantidad,
@@ -113,12 +122,12 @@ export default function CompraForm({ onSubmitCallback }) {
     });
 
     const data = {};
-    data.producto = producto.id;
-    data.proveedor_id = proveedor_id.id;
-    data.fecha = fecha;
-    data.cantidad = cantidad;
+    data.productos = {producto_id:"1", cantidad:"1",precio:"2000"};
+    data.proveedor_id = 2;
+    data.fecha = 2022-12-12;
+    data.cantidad = 10;
     //data.precio = producto.precio;
-    data.total = total;
+    data.total = 2000;
     console.log(data);
 
     axios.post(COMPRA_ENDPOINT, data).then(response => {
@@ -146,7 +155,7 @@ export default function CompraForm({ onSubmitCallback }) {
                   <Form.Group control="productos">
                     <Form.Label> Seleccionar producto</Form.Label>
                     <Select
-                      options={producto}
+                      options={productos}
                       onChange={(e) => onChangeItem(index, "productos", e.value)}
                     ></Select>
                   </Form.Group>
@@ -186,15 +195,7 @@ export default function CompraForm({ onSubmitCallback }) {
                   </Button>
                 </Col>
               </Row>
-              <Col md="4" xs="12" className="mr-4">
-                <Form.Group control="proveedor_id">
-                  <Form.Label> Proveedor</Form.Label>
-                  <Select
-                    options={proveedor_id}
-                    onChange={(e) => onChangeItem(index, "proveedor_id", e.value)}
-                  ></Select>
-                </Form.Group>
-              </Col>
+
               <Col md="4" xs="12">
                 <Form.Group control="fecha">
                   <Form.Label> fecha</Form.Label>
@@ -225,6 +226,7 @@ export default function CompraForm({ onSubmitCallback }) {
               </Col>
 
             </div>
+            
           ))}
           <div>
             <Button variant="success mt-2 mr-2 " type="submit">
@@ -232,8 +234,12 @@ export default function CompraForm({ onSubmitCallback }) {
             </Button>
           </div>
         </div>
+        <div>
+     
+        </div>
       </Form>
       <>
+      
         <Button
           onClick={addElement}
           variant="primary mt-2 mr-2"

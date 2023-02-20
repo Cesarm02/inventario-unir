@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 
 export default function AgregarProductoForm({ errors, onSubmitCallback }) {
   const [producto, setProducto] = useState("");
+  const [codigo, setCodigo] = useState("");
   const [precio, setPrecio] = useState("");
   const [estado, setEstado] = useState("");
   const [unidad, setUnidad] = useState("");
@@ -60,10 +61,11 @@ export default function AgregarProductoForm({ errors, onSubmitCallback }) {
 
   const submitForm = (e) => {
     e.preventDefault();
-    onSubmitCallback({ producto, precio, estado, unidad, categoria, cantidad });
+    onSubmitCallback({ producto, precio, estado, unidad, categoria, cantidad, codigo });
     
     const data = {};
     data.nombre = producto;
+    data.codigo = codigo;
     data.precio = precio;
     data.estado = estado.estado.value;
     data.categoria_id = categoria.categoria.value;
@@ -98,6 +100,19 @@ export default function AgregarProductoForm({ errors, onSubmitCallback }) {
         />
         <Form.Control.Feedback type="invalid">
           {errors.producto}
+        </Form.Control.Feedback>
+      </Form.Group>
+       <Form.Group control="producto">
+        <Form.Label> Codigo Producto</Form.Label>
+        <Form.Control
+          type="text"
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+          placeholder="Codigo del Producto"
+          isInvalid={errors.codigo}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.codigo}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group control="categoria">

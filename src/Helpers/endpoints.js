@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8090/inventario-unir';
 
 export const LOGIN_ENDPOINT = API_URL + "/users/login";
 export const REGISTER_ENDPOINT = API_URL + "/users";
@@ -18,6 +18,4 @@ export const VENTA_ENDPOINT = API_URL + "/venta";
 export const COMPRA_ENDPOINT = API_URL + "/compra";
 
 
-
-
-
+//va faltnado categoria - venta - compra

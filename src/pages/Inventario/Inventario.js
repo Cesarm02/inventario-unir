@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import Busqueda from "./Busqueda";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { PRODUCTOID_ENDPOINT } from "../../Helpers/endpoints";
+import { PRODUCTOZUUL_ELASTIC } from "../../Helpers/endpointZuul";
 
 const columns = [
     {
-      name: "Id",
+      name: "Id elastic",
       selector: (row) => row.id,
+      sortable: true,
+    },{
+      name: "Codigo",
+      selector: (row) => row.codigo,
       sortable: true,
     },
     {
@@ -51,7 +55,7 @@ export default function Inventario() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    axios.get(PRODUCTOID_ENDPOINT).then(response => {
+    axios.get(PRODUCTOZUUL_ELASTIC).then(response => {
       const data = response.data;
       setProducto(data);
       var aux = 0;

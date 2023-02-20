@@ -11,7 +11,7 @@ export default function AgregarProductos() {
     // Se monte el componente (iniciar)
   });
 
-  const addProducto = ({producto, precio, cantidad}) => {
+  const addProducto = ({producto, precio, cantidad, codigo}) => {
     const errors = {};
     setErrors(errors);
 
@@ -26,7 +26,9 @@ export default function AgregarProductos() {
     if(validator.isEmpty(cantidad)){
         errors.cantidad = "La cantidad del producto es obligatorio";
     }
-
+    if(validator.isEmpty(codigo)){
+        errors.codigo = "Codigo de producto es obligatorio";
+    }
     if(!isObjectEmpty(errors)){
         setErrors(errors);
         return;

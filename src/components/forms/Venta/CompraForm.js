@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 
 export default function CompraForm({ onSubmitCallback }) {
-  const [producto, setProducto] = useState("");
+  const [producto, setProducto] = useState([]);
   const [listProducto, setListProduct] = useState([]);
   const [dataProducto, setDataProducto] = useState("");
   const [total, setTotal] = useState("");
@@ -21,12 +21,11 @@ export default function CompraForm({ onSubmitCallback }) {
   //const [id, setId] = useState("");
 
 
-  const [proveedor, setProveedor] = useState("");
+  const [proveedor_id, setProveedor_id] = useState("");
   const [listProveedor, setListProveedor] = useState([]);
   const [dataProveedor, setDataProveedor] = useState("");
 
   const history = useNavigate();
-
 
   //Listado productos
   useEffect(() => {
@@ -35,11 +34,13 @@ export default function CompraForm({ onSubmitCallback }) {
       .then((response) => {
         const data = response.data;
         setDataProducto(data);
+        console.log({dataProducto});
         data.forEach((element) => {
           const aux = { value: element.id, label: element.nombre };
           listProducto.push(aux);
         });
         setProducto(listProducto);
+        console.log(listProducto);
       })
       .catch((e) => {
         console.log(e);
@@ -51,12 +52,12 @@ export default function CompraForm({ onSubmitCallback }) {
       .get(REGISTER_PROVEEDOR_ENDPOINT)
       .then((response) => {
         const data = response.data;
-        setDataProducto(data);
+        setDataProveedor(data);
         data.forEach((element) => {
           const aux = { value: element.id, label: element.nombre };
           listProveedor.push(aux);
         });
-        setProveedor(listProveedor);
+        setProveedor_id(listProveedor);
       })
       .catch((e) => {
         console.log(e);
@@ -74,6 +75,8 @@ export default function CompraForm({ onSubmitCallback }) {
     });
     setElementos(elemenNew);
   };
+
+  
 
   const onChangeItem = (index, name, value) => {
     const elemenNew = [...elementos];
@@ -102,7 +105,7 @@ export default function CompraForm({ onSubmitCallback }) {
     e.preventDefault();
     onSubmitCallback({
       producto,
-      proveedor,
+      proveedor_id,
       fecha,
       cantidad,
       precio,
@@ -111,7 +114,7 @@ export default function CompraForm({ onSubmitCallback }) {
 
     const data = {};
     data.producto = producto.id;
-    data.proveedor_id = proveedor.id;
+    data.proveedor_id = proveedor_id.id;
     data.fecha = fecha;
     data.cantidad = cantidad;
     //data.precio = producto.precio;
@@ -130,6 +133,8 @@ export default function CompraForm({ onSubmitCallback }) {
     })
   };
 
+
+
   return (
     <>
       <Form onSubmit={submitForm}>
@@ -138,11 +143,11 @@ export default function CompraForm({ onSubmitCallback }) {
             <div key={index}>
               <Row>
                 <Col md="4" xs="12" className="mr-4">
-                  <Form.Group control="producto">
+                  <Form.Group control="productos">
                     <Form.Label> Seleccionar producto</Form.Label>
                     <Select
                       options={producto}
-                      onChange={(e) => onChangeItem(index, "producto", e.value)}
+                      onChange={(e) => onChangeItem(index, "productos", e.value)}
                     ></Select>
                   </Form.Group>
                 </Col>
@@ -182,11 +187,11 @@ export default function CompraForm({ onSubmitCallback }) {
                 </Col>
               </Row>
               <Col md="4" xs="12" className="mr-4">
-                <Form.Group control="proveedor">
+                <Form.Group control="proveedor_id">
                   <Form.Label> Proveedor</Form.Label>
                   <Select
-                    options={proveedor}
-                    onChange={(e) => onChangeItem(index, "proveedor", e.value)}
+                    options={proveedor_id}
+                    onChange={(e) => onChangeItem(index, "proveedor_id", e.value)}
                   ></Select>
                 </Form.Group>
               </Col>

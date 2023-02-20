@@ -62,7 +62,6 @@ export default function EditarProveedorForm({ errors, onSubmitCallback, id }) {
       });
       const data = {};
       data.id=id;
-      console.log( data.id);
       data.estado = estadoProv.estado.label;
       data.nombre = nombreProv;
       data.telefono = telefonoProv;

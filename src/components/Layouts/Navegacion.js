@@ -45,9 +45,6 @@ export default function Navegacion() {
             <NavDropdown.Item as={NavLink} to={"/compras"}>
               Compra
             </NavDropdown.Item>
-            <NavDropdown.Item as={NavLink} to={"/cotizacion"}>
-              Cotización
-            </NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title="Acciones" id="menu-dropdown">
             <NavDropdown.Item as={NavLink} to={"/inventario"}>

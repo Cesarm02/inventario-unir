@@ -42,7 +42,7 @@ export default function AgregarCliente({ errors, onSubmitCallback }) {
     data.documento = documento;
     data.nombre = nombre;
     data.apellido = apellido;
-    data.tipoDocumento = tipoDocumento;
+    data.tipoDocumento = tipoDocumento.opcion.value;
     data.estado = estado;
     data.telefono = telefono;
     data.direccion=direccion;

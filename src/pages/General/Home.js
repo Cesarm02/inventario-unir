@@ -4,29 +4,13 @@ import { Row, Container } from "react-bootstrap";
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Legend } from "recharts";
 import "../../Css/Home.css";
 import { CLIENTES_ENDPOINT, COMPRA_ENDPOINT, PRODUCTOID_ENDPOINT, VENTA_ENDPOINT } from "../../Helpers/endpoints";
-import moment from 'moment';
-
-const data = [
-  { mes: "Enero", ventas: 2400 },
-  { mes: "Febrero", ventas: 700 },
-  { mes: "Marzo", ventas: 2200 },
-  { mes: "Abril", ventas: 2400 },
-  { mes: "Mayo", ventas: 700 },
-  { mes: "Junio", ventas: 2200 },
-  { mes: "Julio", ventas: 2400 },
-  { mes: "Agosto", ventas: 700 },
-  { mes: "Septiembre", ventas: 2200 },
-  { mes: "Octubre", ventas: 2400 },
-  { mes: "Noviembre", ventas: 700 },
-  { mes: "Diciembre", ventas: 2200 },
-];
 
 export default function Home() {
 
-  const [ventas, setVentas] = useState();
-  const [compras, setCompras] = useState();
-  const [valor, setValor] = useState();
-  const [clientes, setClientes] = useState();
+  const [ventas, setVentas] = useState(0);
+  const [compras, setCompras] = useState(0);
+  const [valor, setValor] = useState(0);
+  const [clientes, setClientes] = useState(0);
   const [graficaVent, setGraficaVent] = useState();
 
   const auxGrafVent = [];

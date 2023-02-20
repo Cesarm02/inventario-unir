@@ -82,9 +82,6 @@ export default function VentaForm({ errors, onSubmitCallback}) {
     elemenNew[index].total =
       elemenNew[index].precio * elemenNew[index].cantidad;
     setElementos(elemenNew);
-    
-            
-    
    
   };
   
@@ -136,6 +133,7 @@ export default function VentaForm({ errors, onSubmitCallback}) {
   
   
   return (
+    <>
     <Form onSubmit={submitForm}>
       Total:{totalProd}
       <div>
@@ -212,18 +210,21 @@ export default function VentaForm({ errors, onSubmitCallback}) {
           </div>
         ))}
         <div>
-          <Button
-            onClick={addElement}
-            variant="primary mt-2 mr-2"
-            type="submit"
-          >
-            Agregar producto
-          </Button>
+         
           <Button variant="success mt-2 mr-2 " type="submit">
             Realizar venta
           </Button>
         </div>
       </div>
     </Form>
+    <Button
+            onClick={addElement}
+            variant="primary mt-2 mr-2"
+            type="submit"
+          >
+            Agregar producto
+          </Button>
+    </>
+    
   );
 }

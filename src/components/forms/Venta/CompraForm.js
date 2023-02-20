@@ -1,8 +1,8 @@
 import { Form, Button, Row, Col, Toast } from "react-bootstrap";
 import Select from 'react-select'
 import axios from 'axios';
-import React, {useState, useEffect} from 'react'
-import { COMPRA_ENDPOINT, PRODUCTO_ENDPOINT } from "../../../Helpers/endpoints";
+import React, { useState, useEffect } from 'react'
+import { COMPRA_ENDPOINT, PRODUCTO_ENDPOINT, REGISTER_PROVEEDOR_ENDPOINT, PROVEEDOR_ENDPOINT } from "../../../Helpers/endpoints";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify"
 import DataTable from "react-data-table-component";
@@ -10,163 +10,235 @@ import { Link } from "react-router-dom";
 //import Boton from "../../components/Botones/BotonEditar";
 
 
-
-export default function CompraForm() {
-
-  const data = [
-    { id: 1, nombre: "leche", cantidad: 3, precio: 2000},
-    { id: 2, nombre: "carne", cantidad: 2, precio: 2000},
-    { id: 3, nombre: "pasta", cantidad: 5, precio: 2000},
-  ];
-  const [elementos, setElementos] = useState([]);
+export default function CompraForm({ onSubmitCallback }) {
   const [producto, setProducto] = useState("");
+  const [listProducto, setListProduct] = useState([]);
+  const [dataProducto, setDataProducto] = useState("");
+  const [total, setTotal] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [cantidad, setCantidad] = useState("");
   const [precio, setPrecio] = useState("");
+  //const [id, setId] = useState("");
 
-const [listOptionProd, setOptionProd] = useState([]);
 
-  useEffect( () => {
-    axios.get(PRODUCTO_ENDPOINT).then(response => {
+  const [proveedor, setProveedor] = useState("");
+  const [listProveedor, setListProveedor] = useState([]);
+  const [dataProveedor, setDataProveedor] = useState("");
+
+  const history = useNavigate();
+
+
+  //Listado productos
+  useEffect(() => {
+    axios
+      .get(PRODUCTO_ENDPOINT)
+      .then((response) => {
         const data = response.data;
-        data.forEach(element => {
-            const aux = {value : element.id, label: element.nombre}
-            listOptionProd.push(aux);
-
+        setDataProducto(data);
+        data.forEach((element) => {
+          const aux = { value: element.id, label: element.nombre };
+          listProducto.push(aux);
         });
-    
-        console.log(listOptionProd)
-        setOptionProd(listOptionProd);
-    }).catch(e => {
-        console.error(e);
-    })
-}, []);
+        setProducto(listProducto);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
-const productoChanges = (producto) =>{
-  setProducto({producto});
-};
+  useEffect(() => {
+    axios
+      .get(REGISTER_PROVEEDOR_ENDPOINT)
+      .then((response) => {
+        const data = response.data;
+        setDataProducto(data);
+        data.forEach((element) => {
+          const aux = { value: element.id, label: element.nombre };
+          listProveedor.push(aux);
+        });
+        setProveedor(listProveedor);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
+  const [elementos, setElementos] = useState([]);
 
   const addElement = () => {
     const elemenNew = [...elementos];
     elemenNew.push({
-      producto: "",
       cantidad: 0,
       precio: 0,
       total: 0,
-      numerofactura:0,
-      proveedor_id:0,
-      fecha:0,
     });
-
     setElementos(elemenNew);
-    
-
   };
 
   const onChangeItem = (index, name, value) => {
     const elemenNew = [...elementos];
     elemenNew[index][name] = value;
-    console.log(index + " - " + name + " -  " + value);
-
-    if(name === "producto"){
-      elemenNew[index].precio = data[index].precio; //se debe seleccionar el del producto
+    if (name === "producto") {
+      elemenNew[index].precio = dataProducto[value].precio; //se debe seleccionar el del producto
     }
-    elemenNew[index].total = elemenNew[index].precio * elemenNew[index].cantidad;
+    elemenNew[index].total =
+      elemenNew[index].precio * elemenNew[index].cantidad;
     setElementos(elemenNew);
   };
 
   const eliminarElement = (index) => {
-   
-    if(index > -1){
-      const newArray = elementos.filter((item, indice) =>{
-        return indice !== index
+    if (index > -1) {
+      const newArray = elementos.filter((item, indice) => {
+        return indice !== index;
       });
       setElementos(newArray);
     }
-    
   };
 
   console.log(elementos);
 
+  const submitForm = (e) => {
+
+    e.preventDefault();
+    onSubmitCallback({
+      producto,
+      proveedor,
+      fecha,
+      cantidad,
+      precio,
+      total,
+    });
+
+    const data = {};
+    data.producto = producto.id;
+    data.proveedor_id = proveedor.id;
+    data.fecha = fecha;
+    data.cantidad = cantidad;
+    //data.precio = producto.precio;
+    data.total = total;
+    console.log(data);
+
+    axios.post(COMPRA_ENDPOINT, data).then(response => {
+      toast.success("Compra correctamente", {
+        position: toast.POSITION.TOP_CENTER
+      })
+
+      history("/compras")
+
+    }).catch(e => {
+      console.log(e);
+    })
+  };
 
   return (
-    <div>
-      {elementos.map((item, index) => (
-        <div key={index}>
-          <Row>
-            <Col md="4" xs="12" className="mr-4">
-      <Form.Group control="categoria">
-            <Form.Label> Producto</Form.Label>
-            <Select 
-                options={listOptionProd}
-                onChange={productoChanges}
-                >
-            </Select>
-      </Form.Group>
+    <>
+      <Form onSubmit={submitForm}>
+        <div>
+          {elementos.map((item, index) => (
+            <div key={index}>
+              <Row>
+                <Col md="4" xs="12" className="mr-4">
+                  <Form.Group control="producto">
+                    <Form.Label> Seleccionar producto</Form.Label>
+                    <Select
+                      options={producto}
+                      onChange={(e) => onChangeItem(index, "producto", e.value)}
+                    ></Select>
+                  </Form.Group>
+                </Col>
+                <Col md="4" xs="12">
+                  <Form.Group control="cantidad">
+                    <Form.Label> cantidad</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={item.cantidad}
+                      name="cantidad"
+                      onChange={(e) =>
+                        onChangeItem(index, e.target.name, e.target.value)
+                      }
+                      placeholder="Cantidad"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md="4" xs="12">
+                  <Form.Group control="total">
+                    <Form.Label> Total</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={item.total}
+                      name="total"
+                      disabled
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md="4" xs="12">
+                  <Button
+                    onClick={() => eliminarElement(index)}
+                    variant="danger mt-4 mr-2"
+                    type="submit"
+                  >
+                    eliminar {index + 1}
+                  </Button>
+                </Col>
+              </Row>
+              <Col md="4" xs="12" className="mr-4">
+                <Form.Group control="proveedor">
+                  <Form.Label> Proveedor</Form.Label>
+                  <Select
+                    options={proveedor}
+                    onChange={(e) => onChangeItem(index, "proveedor", e.value)}
+                  ></Select>
+                </Form.Group>
+              </Col>
+              <Col md="4" xs="12">
+                <Form.Group control="fecha">
+                  <Form.Label> fecha</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={item.fecha}
+                    name="fecha"
+                    onChange={(e) =>
+                      onChangeItem(index, e.target.name, e.target.value)
+                    }
+                    placeholder="Fecha"
+                  />
+                </Form.Group>
+              </Col>
+              <Col md="4" xs="12">
+                <Form.Group control="fecha">
+                  <Form.Label> Numero Factura</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={item.numeroFactura}
+                    name="numeroFactura"
+                    onChange={(e) =>
+                      onChangeItem(index, e.target.name, e.target.value)
+                    }
+                    placeholder="numeroFactura"
+                  />
+                </Form.Group>
+              </Col>
 
-            </Col>
-            <Col md="4" xs="12">
-              <Form.Group control="cantidad">
-                <Form.Label> cantidad</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={item.cantidad}
-                  name="cantidad"
-                  cantidad={item.cantidad}
-                  onChange={(e) =>
-                    onChangeItem(index, e.target.name, e.target.value)
-                  }
-                  placeholder="Cantidad"
-                />
-              </Form.Group>
-            </Col>
-            <Col md="4" xs="12">
-              <Form.Group control="total">
-                <Form.Label> Total </Form.Label>
-                <Form.Control
-                  type="number"
-                  value={item.total}
-                  name="total"
-                  cantidad={item.total}
-                  onChange={(e) =>
-                    onChangeItem(index, e.target.name, e.target.value)
-                  }
-                  placeholder="Total"
-                />
-              </Form.Group>
-            </Col>
-            <Col md="4" xs="12">
-              <Form.Group control="numerofactura">
-                <Form.Label> Numero de Factura </Form.Label>
-                <Form.Control
-                  type="number"
-                  value={item.numerofactura}
-                  name="numerofactura"
-                  cantidad={item.numerofactura}
-                  onChange={(e) =>
-                    onChangeItem(index, e.target.name, e.target.value)
-                  }
-                  placeholder="Numero de factura"
-                />
-              </Form.Group>
-            </Col>
-
-            <Col md="4" xs="12">
-              <Button onClick={() => eliminarElement(index)} variant="danger mt-4 mr-2"  type="submit">
-                eliminar {index + 1}
-              </Button>
-            </Col>
-          </Row>
-          
+            </div>
+          ))}
+          <div>
+            <Button variant="success mt-2 mr-2 " type="submit">
+              Realizar compra
+            </Button>
+          </div>
         </div>
-      ))}
-      <div>
-        <Button onClick={addElement} variant="primary mt-2 mr-2" type="submit">
+      </Form>
+      <>
+        <Button
+          onClick={addElement}
+          variant="primary mt-2 mr-2"
+          type="submit"
+        >
           Agregar producto
         </Button>
-        <Button variant="success mt-2 mr-2 " type="submit">
-          Realizar Compra
-        </Button>
-      </div>
-    </div>
+      </>
+
+    </>
+
   );
 }
